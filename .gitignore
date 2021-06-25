@@ -1,1 +1,6 @@
-.vscode
+fragments/contribut*
+fragments/articles
+fragments/verses.html
+!docs/ads/*
+!docs/wallpaper/*
+private

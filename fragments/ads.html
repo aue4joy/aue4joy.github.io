@@ -4,11 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=0.8">
         <title>Aue advertisements</title>
-        <link href="https://fonts.googleapis.com/css2?family=Bitter:ital@0;1&display=swap" rel="stylesheet"> 
-        <link rel="icon" type="image/svg+xml" href="Aue.svg"/>
-        <link rel="stylesheet" href="index.css">
-        <script src="aue.js"></script>
-        <script src="index.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&display=swap" rel="stylesheet"> 
+        <link rel="icon" type="image/svg+xml" href="../Aue.svg"/>
+        <link rel="stylesheet" href="../index.css">
         <style>
 body {
     background-color: #f4f8ff;
@@ -20,7 +18,8 @@ a {
 
 ads {
     display: block;
-    font-size: 2rem;
+    font-size: 1.75rem;
+    line-height: 1.45;
     margin-bottom: 3rem;
 }
 ad {
@@ -31,6 +30,7 @@ ad {
     width: 26rem;
     height: 26rem;
     outline: .1em solid #000;
+    vertical-align: top;
 }
 ad::after {
     content: "";
@@ -39,7 +39,7 @@ ad::after {
     width: 1.1em;
     height: 1.1em;
     position: absolute;
-    background-image: url(media/Aue-cropped.png);
+    background-image: url(Aue-cropped.png);
     background-size: 1.1em;
     background-repeat: no-repeat;
 }
@@ -82,7 +82,7 @@ td {
         </style>
     </head>
     <body onload="DOM_display_Aue()">
-        <h1><img src="Aue.svg">Aue</h1>
+        <h1><img src="../Aue.svg" width="32" height="32">Aue</h1>
         <h2>Advertisements</h2>
         <ads>
             <ad>
@@ -130,42 +130,42 @@ td {
             </ad>
             <ad>
                 enjoy food! We evolved for it
-                <img class="large" src="media/food.jpg">
+                <img class="large" src="food.jpg">
                 and with careful diet can enjoy it without restraint. Keep it yummy!
             </ad>
             <ad>
                 capital punishment solves
-                <img class="large" src="media/gavel.png">
+                <img class="large" src="gavel.png">
                 no crime: used unequally, irreversible, a precedent abused through history
             </ad>
             <ad>
                 to improve digital pastime
-                <img class="large" src="media/phone-transparent.png">
+                <img class="large" src="phone-transparent.png">
                 put it down, wonder about something, and pick it up again with meaning
             </ad>
             <ad>
                 map lines are human drawn
-                <img class="large" src="media/world-map.jpg">
+                <img class="large" src="world-map.jpg">
                 and are all stories, so help write a good one, for joy
             </ad>
             <ad>
                 nature needs no gratitude
-                <img class="large" src="media/deforestation.jpeg">
+                <img class="large" src="deforestation.jpeg">
                 but protection; we evolved for and need it, and are actively destroying it
             </ad>
             <ad>
                 thank the farmers
-                <img class="large" src="media/MYR_QSEM_Agriculture_780x439.jpg">
+                <img class="large" src="MYR_QSEM_Agriculture_780x439.jpg">
                 and their society. Let technology emancipate all from labour!
             </ad>
             <ad>
                 all sides have prayed
-                <img class="large" src="media/HERO-127-gr-15-99-120562_001-ac.jpg">
+                <img class="large" src="HERO-127-gr-15-99-120562_001-ac.jpg">
                 but war is no test of souls, only geopolitics
             </ad>
             <ad>
                 no priest, no prophet
-                <img class="large" src="media/flowers.jpg">
+                <img class="large" src="flowers.jpg">
                 need remind us the waste & woe of murder
             </ad>
             <ad id="aueAd">
@@ -174,9 +174,10 @@ td {
                         padding-left: 2em;
                     }
                     aue verse, #aueAd a {
-                        line-height: 1.27em;
+                        line-height: 1.5em;
                         font-size: .6em;
                         color: #fff;
+                        display: block;
                     }
                     #aueAd {
                         background-color: #000;
@@ -185,29 +186,29 @@ td {
                         bottom: 1.7em;
                     }
                 </style>
-                <aue></aue>
+                <aue>{{verses}}</aue>
                 <a>
-                    <img class="small" src="media/insta-negative.png"> @aue4joy</a>
+                    aue4joy.github.io
                 </a>
             </ad>
             <ad>
                 animals are not lesser
-                <img class="large" src="media/ape.webp">
+                <img class="large" src="ape.webp">
                 <u>we are animals</u>; use cognition to recognise what they already know
             </ad>
             <ad>
                 the concept of <u>sin</u> is
-                <img class="large" src="media/Snake-Apple.png">
+                <img class="large" src="Snake-Apple.png">
                 dictated, outmoded, invasive, unscientific
             </ad>
             <ad>
                 the concept of <u>karma</u> is
-                <img class="large" src="media/1200px-Endlessknot.svg.png">
+                <img class="large" src="1200px-Endlessknot.svg.png">
                 dubious, nonchalant, unscientific
             </ad>
             <ad>
                 the concept of <u>joy & woe</u> is
-                <img class="large" src="Aue.svg">
+                <img class="large" src="../Aue.svg">
                 universal, measurable, inclusive, tangible
             </ad>
             <ad>
@@ -220,7 +221,7 @@ td {
                 </table>
                 <p>Straight to the point, for joy.</p>
                 <a>
-                    <img class="small" src="media/insta.png"> @aue4joy</a>
+                    aue4joy.github.io</a>
                 </a>
             </ad>
         </ads>

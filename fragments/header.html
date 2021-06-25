@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
+    <meta
+      name="description"
+      content="[[desc]]"
+    />
+    <title>[[title]]</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/Aue.svg" />
+    <link rel="stylesheet" href="/index.css" />
+    <script src="/index.js"></script>
+    <script>
+function DomLoad() {
+  var contributor = window.location.pathname.replace(/\//g, "");
+  if (contributor) {
+    document.getElementById("contributor").value = contributor;
+  }
+  setTimeout("FirstLoad()", 100);
+}
+
+function DomContributor(that) {
+  window.location.href = "/" + that.value.replaceAll(" ", "");
+}
+    </script>
+  </head>
+  <body onload="DomLoad()">

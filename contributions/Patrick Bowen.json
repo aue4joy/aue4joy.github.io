@@ -130,11 +130,7 @@
       "Be aware of safe medical or scientific research, & participate & benefit with joy. Also donating material such as blood, tissue, or hair.",
       "gijkno"
     ],
-    [
-      "Existence",
-      "To us the universe is perfect as it needed to be so for our existence.",
-      "fgn"
-    ],
+    ["Existence", "To us the universe is perfect as it needed to be so for our existence.", "fgn"],
     [
       "Slavery",
       "Find & eliminate enslavement or encouragement into so, & ensure executives similarly laboured themselves.",
@@ -166,7 +162,7 @@
       "jklno"
     ]
   ],
-  "verseDescriptions": [
+  "verseDescs": [
     [
       "a",
       "I find this really important right now, in the early days of Aue being shared.\n<b>Think sensibly for Aue.</b> It's a very direct verse, calling upon innate abilities we all have, to discover Aue. Aue is not written so much for its face value, rather to be studied until understood, with serious attitude.\nThe opinions encourage a regular revision of Aue in respect to one's life, and publicly so."
@@ -254,26 +250,14 @@
       "https://www.youtube.com/watch?v=esPRsT-lmw8",
       "Using science to identify and alleviate anti-social behaviour and other mental deviations, also adjusting moral responsibility of the afflicted. Rightfully, it is a controversial subject, but if we have the power to heal&mdash;and only healing, restoration&mdash;then we should explore it. Caution should be exercised to ensure it is a purely medicinal, restorative, ethical science. “Behaviour is not the problem, behaviour is an expression of the problem.”"
     ],
-    [
-      "SciShow YouTube channel",
-      "https://www.youtube.com/channel/UCZYTClx2T1of7BRZ86-8fow",
-      ""
-    ],
-    [
-      "PBS Eons YouTube Channel",
-      "https://www.youtube.com/channel/UCzR-rom72PHN9Zg7RML9EbA",
-      ""
-    ],
+    ["SciShow YouTube channel", "https://www.youtube.com/channel/UCZYTClx2T1of7BRZ86-8fow", ""],
+    ["PBS Eons YouTube Channel", "https://www.youtube.com/channel/UCzR-rom72PHN9Zg7RML9EbA", ""],
     [
       "Healthline",
       "https://www.healthline.com/process",
       "A great resource for questions about daily health, diseases, conditions, diets, and other impacts of lifestyle on health. They are credible and science-first, keeping advice simple and effective.</a>."
     ],
-    [
-      "Psychology Today",
-      "https://www.psychologytoday.com/gb/docs/about-psychology-today",
-      ""
-    ],
+    ["Psychology Today", "https://www.psychologytoday.com/gb/docs/about-psychology-today", ""],
     [
       "Our World in Data",
       "https://ourworldindata.org",
@@ -288,11 +272,7 @@
       ],
       ""
     ],
-    [
-      "The power of animism: John Reid",
-      "https://www.youtube.com/watch?v=lmhFRarkw8E",
-      ""
-    ]
+    ["The power of animism: John Reid", "https://www.youtube.com/watch?v=lmhFRarkw8E", ""]
   ],
   "charities": []
 }
