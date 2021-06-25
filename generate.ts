@@ -17,7 +17,7 @@ const contributors = [...Deno.readDirSync("contributions")]
 
 const rmdirs = (dir: string) =>
   [...Deno.readDirSync(dir)]
-    .filter((e) => e.isDirectory && e.name != "ads")
+    .filter((e) => e.isDirectory && e.name != "cards")
     .forEach((e) => Deno.removeSync(`${dir}/${e.name}`, { recursive: true }));
 rmdirs("docs/");
 rmdirs("fragments/");
@@ -207,7 +207,7 @@ articles.forEach(({ title, author, authorId }) => {
   );
 });
 
-//Generate ads and wallpaper endpoint
+//Generate cards and wallpaper endpoint
 
-Deno.writeTextFileSync("docs/ads/index.html", target("ads"));
+Deno.writeTextFileSync("docs/cards/index.html", target("cards"));
 Deno.writeTextFileSync("docs/wallpaper/index.html", target("wallpaper"));

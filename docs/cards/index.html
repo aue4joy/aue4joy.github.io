@@ -16,13 +16,13 @@ a {
     color: #00f;
 }
 
-ads {
+cards {
     display: block;
     font-size: 1.75rem;
     line-height: 1.45;
     margin-bottom: 3rem;
 }
-ad {
+card {
     display: inline-block;
     position: relative;
     padding: 1em;
@@ -32,10 +32,10 @@ ad {
     outline: .1em solid #000;
     vertical-align: top;
 }
-ad::after {
+card::after {
     content: "";
     right: 1em;
-    bottom: 1.3em;
+    bottom: 1.05em;
     width: 1.1em;
     height: 1.1em;
     position: absolute;
@@ -43,10 +43,10 @@ ad::after {
     background-size: 1.1em;
     background-repeat: no-repeat;
 }
-ad p {
+card p {
     padding: .5em .1em;
 }
-ad a {
+card a {
     text-align: left;
     display: inline-block;
     line-height: 1.5em;
@@ -56,13 +56,13 @@ ad a {
     position: absolute;
     bottom: 1em;
 }
-ad img.large {
+card img.large {
     display: block;
     max-width: 100%;
     margin: .5em auto;
     max-height: 6.5em;
 }
-ad img.small {
+card img.small {
     width: 1.5em;
     height: 1.5em;
     vertical-align: middle;
@@ -82,11 +82,62 @@ td {
         </style>
     </head>
     <body onload="DOM_display_Aue()">
-        <h1><img src="../Aue.svg" width="32" height="32">Aue</h1>
-        <h2>Advertisements</h2>
-        <ads>
-            <ad>
-                <div class="adherence-ad">
+        <p><a href="/">Aue main website</a></p>
+        <h1><img src="../Aue.svg" width="32" height="32">Aue Cards</h1>
+        <cards>
+            <card id="aue-card">
+                <style>
+                    aue verse {
+                        padding-left: 2em;
+                    }
+                    aue verse, #aue-card a {
+                        line-height: 1.5em;
+                        font-size: .6em;
+                        color: #fff;
+                        display: block;
+                    }
+                    #aue-card {
+                        background-color: #000;
+                    }
+                    #aue-card a {
+                        bottom: 1.7em;
+                    }
+                </style>
+                <aue><verse data-cite="a"><cite>a</cite> Think sensibly for Aue;</verse>
+<verse data-cite="b"><cite>b</cite> believe in it & your abilities.</verse>
+<verse data-cite="c"><cite>c</cite> Share, preserve, exult it for joy.</verse>
+<verse data-cite="d"><cite>d</cite> Nature, so body, so mind, are of now;</verse>
+<verse data-cite="e"><cite>e</cite> after death is scattering.</verse>
+<verse data-cite="f"><cite>f</cite> Evolution gave joy & woe, sentience.</verse>
+<verse data-cite="g"><cite>g</cite> Life, together, share the universe.</verse>
+<verse data-cite="h"><cite>h</cite> Time, volatile, make precious.</verse>
+<verse data-cite="i"><cite>i</cite> Know of woe and seek joy happily.</verse>
+<verse data-cite="j"><cite>j</cite> Nature & society is our habitat.</verse>
+<verse data-cite="k"><cite>k</cite> Oppose harm and uphold empathy.</verse>
+<verse data-cite="l"><cite>l</cite> Seek peace to woe incited, inflicted.</verse>
+<verse data-cite="m"><cite>m</cite> Show Aue beside woe naively fed.</verse>
+<verse data-cite="n"><cite>n</cite> Believe critically in science;</verse>
+<verse data-cite="o"><cite>o</cite> wield for joy and grow it.</verse>
+</aue>
+                <a>
+                    aue4joy.github.io
+                </a>
+            </card>
+            <card>
+                <table>
+                    <tr><td>The Bible</td><td>+750k</td></tr>
+                    <tr><td>The Vedas</td><td>+600k</td></tr>
+                    <tr><td>The Torah</td><td>+160k</td></tr>
+                    <tr><td>The Quran</td><td>+140k</td></tr>
+                    <tr class="highlight"><td>Aue</td><td>84 words</td></tr>
+                </table>
+                <p>Straight to the point, for joy.</p>
+                <a>
+                    aue4joy.github.io</a>
+                </a>
+            </card>
+            <card>
+                <div class="adherence-card">
                     <div class="Header">what Aue adherence involves</div>
                     <div class="one">
                         a personal understanding of Aue through study & reflection
@@ -106,16 +157,16 @@ td {
                     </div>
                 </div>
                 <style>
-                    .adherence-ad {
+                    .adherence-card {
                         font-size: .7em;
                         display: grid;
                         grid-template-columns: 1fr 1fr;
                         grid-template-areas: "Header Header" "one two" "three four";
                     }
-                    .adherence-ad div:not(:nth-child(1)) {
+                    .adherence-card div:not(:nth-child(1)) {
                         padding: .5em;
                     }
-                    .adherence-ad div span {
+                    .adherence-card div span {
                         font-size: 1.77em;
                         display: block;
                         text-align: center;
@@ -127,104 +178,68 @@ td {
                     .three { grid-area: three; background-color: rgba(255, 220, 220, 1); }
                     .four  { grid-area: four;  background-color: rgba(140, 255, 140, 1); }
                 </style>
-            </ad>
-            <ad>
+            </card>
+            <card>
                 enjoy food! We evolved for it
                 <img class="large" src="food.jpg">
                 and with careful diet can enjoy it without restraint. Keep it yummy!
-            </ad>
-            <ad>
+            </card>
+            <card>
                 capital punishment solves
                 <img class="large" src="gavel.png">
                 no crime: used unequally, irreversible, a precedent abused through history
-            </ad>
-            <ad>
+            </card>
+            <card>
                 to improve digital pastime
                 <img class="large" src="phone-transparent.png">
                 put it down, wonder about something, and pick it up again with meaning
-            </ad>
-            <ad>
+            </card>
+            <card>
                 map lines are human drawn
                 <img class="large" src="world-map.jpg">
                 and are all stories, so help write a good one, for joy
-            </ad>
-            <ad>
+            </card>
+            <card>
                 nature needs no gratitude
                 <img class="large" src="deforestation.jpeg">
                 but protection; we evolved for and need it, and are actively destroying it
-            </ad>
-            <ad>
+            </card>
+            <card>
                 thank the farmers
                 <img class="large" src="MYR_QSEM_Agriculture_780x439.jpg">
                 and their society. Let technology emancipate all from labour!
-            </ad>
-            <ad>
+            </card>
+            <card>
                 all sides have prayed
                 <img class="large" src="HERO-127-gr-15-99-120562_001-ac.jpg">
                 but war is no test of souls, only geopolitics
-            </ad>
-            <ad>
+            </card>
+            <card>
                 no priest, no prophet
                 <img class="large" src="flowers.jpg">
                 need remind us the waste & woe of murder
-            </ad>
-            <ad id="aueAd">
-                <style>
-                    aue verse {
-                        padding-left: 2em;
-                    }
-                    aue verse, #aueAd a {
-                        line-height: 1.5em;
-                        font-size: .6em;
-                        color: #fff;
-                        display: block;
-                    }
-                    #aueAd {
-                        background-color: #000;
-                    }
-                    #aueAd a {
-                        bottom: 1.7em;
-                    }
-                </style>
-                <aue>{{verses}}</aue>
-                <a>
-                    aue4joy.github.io
-                </a>
-            </ad>
-            <ad>
+            </card>
+            <card>
                 animals are not lesser
                 <img class="large" src="ape.webp">
                 <u>we are animals</u>; use cognition to recognise what they already know
-            </ad>
-            <ad>
+            </card>
+            <card>
                 the concept of <u>sin</u> is
                 <img class="large" src="Snake-Apple.png">
                 dictated, outmoded, invasive, unscientific
-            </ad>
-            <ad>
+            </card>
+            <card>
                 the concept of <u>karma</u> is
                 <img class="large" src="1200px-Endlessknot.svg.png">
                 dubious, nonchalant, unscientific
-            </ad>
-            <ad>
+            </card>
+            <card>
                 the concept of <u>joy & woe</u> is
                 <img class="large" src="../Aue.svg">
                 universal, measurable, inclusive, tangible
-            </ad>
-            <ad>
-                <table>
-                    <tr><td>The Bible</td><td>+750k</td></tr>
-                    <tr><td>The Vedas</td><td>+600k</td></tr>
-                    <tr><td>The Torah</td><td>+160k</td></tr>
-                    <tr><td>The Quran</td><td>+140k</td></tr>
-                    <tr class="highlight"><td>Aue</td><td>84 words</td></tr>
-                </table>
-                <p>Straight to the point, for joy.</p>
-                <a>
-                    aue4joy.github.io</a>
-                </a>
-            </ad>
-        </ads>
+            </card>
+        </cards>
         <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text">
             <a rel="cc:attributionURL" property="dct:title" href="https://aue4joy.github.io">Aue</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/phunanon/Aue">Patrick Bowen</a> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /></a>
         </p>
