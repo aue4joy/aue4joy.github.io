@@ -3,10 +3,12 @@ const es = el => [...document.querySelectorAll(el)];
 const ess = el => e(el).style;
 const i2c = i => String.fromCharCode(97 + i);
 
+const numOpinion = () => es("opinion").length;
+
 let inClick = false;
 
 function DomVerseHover() {
-  if (inClick || !e("h2.opinions")) {
+  if (inClick || !numOpinion()) {
     return;
   }
   DomReset();
@@ -32,7 +34,7 @@ function DomOpinionHover() {
 }
 
 function DomClick(e) {
-  if (!es("opinion")) {
+  if (!numOpinion()) {
     return;
   }
   if (!(inClick = !inClick)) {
@@ -51,7 +53,7 @@ function DomReset() {
     return;
   }
   if (e("h2.opinions")) {
-    e("h2.opinions").innerHTML = `Opinions (${es("opinion").length})`;
+    e("h2.opinions").innerHTML = `Opinions (${numOpinion()})`;
   }
   es("verse, opinion").forEach(el =>
     el.classList.remove("dim", "underlined", "unselectable"),
@@ -59,11 +61,15 @@ function DomReset() {
 }
 
 function FirstLoad() {
+  if (!numOpinion()) {
+    return;
+  }
   es("verse").forEach(l => {
     l.addEventListener("mouseover", DomVerseHover);
     l.addEventListener("click", DomVerseHover);
     l.addEventListener("click", DomClick);
     l.addEventListener("mouseout", DomReset);
+    l.style.cursor = "pointer";
   });
   es("opinion").forEach(l => {
     l.addEventListener("mouseover", DomOpinionHover);
