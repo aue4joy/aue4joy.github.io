@@ -68,14 +68,14 @@ Deno.writeTextFileSync(
   "fragments/articles.html",
   articles
     .map(({ name, title, byLine, author, authorId, firstPara }) => {
-      const maxLen = 256;
+      const maxLen = 200;
       firstPara = firstPara.length > maxLen ? firstPara.substr(0, maxLen) + "…" : firstPara;
       return `
 <a class="article-link" href="${authorId}/${name}">
   <h3>${title}</h3>
   <i>${byLine}</i>
   <p>${firstPara}</p>
-<a>`;
+</a>`;
     })
     .join("")
 );
