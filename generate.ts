@@ -61,8 +61,10 @@ const articles = [...walkSync("articles", { includeDirs: false })].map(({ name, 
   const title = content.match(/<h1>(.+?)<\/h1>/)?.[1] ?? "Unknown article";
   const firstPara = content.match(/<p>((?:.|\s)+?)<\/p>/m)?.[1] ?? "";
   const byLine = content.match(/<h3>((?:.|\s)+?)<\/h3>/)?.[1] ?? "";
-  return { name, title, path, byLine, author, authorId, firstPara };
+  const date = Date.parse(byLine.match(/\d+-\d+-\d+/)?.[0] ?? "");
+  return { name, title, path, byLine, date, author, authorId, firstPara };
 });
+articles.sort(({ date: b }, { date: a }) => a - b);
 
 Deno.writeTextFileSync(
   "fragments/articles.html",
