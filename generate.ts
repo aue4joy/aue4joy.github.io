@@ -200,8 +200,9 @@ contributors.forEach(c => {
 
 //Generate article endpoints
 
-articles.forEach(({ name, author, authorId, title }) => {
+articles.forEach(({ name, author, authorId, title, firstPara }) => {
   const dir = `docs/${authorId}`;
+  const desc = `${firstPara.replace(/\s+/g, " ").trim().substr(0, 150)}…`;
   mkdir(dir);
   mkdir(`${dir}/${name}`);
   const content = target(`${authorId}---${name}`);
@@ -209,7 +210,7 @@ articles.forEach(({ name, author, authorId, title }) => {
     `${dir}/${name}/index.html`,
     content
       .replace("[[title]]", `${title} - ${author}`)
-      .replace("[[desc]]", `${title} by ${author}`)
+      .replace("[[desc]]", desc)
   );
 });
 
