@@ -117,15 +117,15 @@ contributors.forEach(c => {
   const materialEls = materials.map(([title, urls, body]) => materialHtml(title, urls, body));
   let html = "";
   if (opinionEls.length) {
-    const els = opinionEls.join("");
+    const els = opinionEls.join("\n");
     html += `<column class="opinions"><h2 class="opinions">Opinions</h2><opinions>${els}</opinions></column>`;
   }
   if (descEls.length) {
-    const els = descEls.join("");
+    const els = descEls.join("\n");
     html += `<column class="descs"><h2>Verse Descriptions</h2><descs>${els}</descs></column>`;
   }
   if (materialEls.length) {
-    const els = materialEls.join("");
+    const els = materialEls.join("\n");
     html += `<column class="thin materials"><h2>Materials</h2><materials>${els}</materials></column>`;
   }
   Deno.writeTextFileSync(`fragments/contributions/${c}-inner.html`, html);
