@@ -66,21 +66,22 @@ const articles = [...walkSync("articles", { includeDirs: false })].map(({ name, 
 });
 articles.sort(({ date: b }, { date: a }) => a - b);
 
-Deno.writeTextFileSync(
-  "fragments/articles.html",
-  articles
-    .map(({ name, title, byLine, author, authorId, firstPara }) => {
+function makeArticlesFragment(forAuthor?: string) {
+  return articles
+    .filter(a => !forAuthor || a.authorId == forAuthor)
+    .map(({ name, title, byLine, authorId, firstPara }) => {
       const maxLen = 200;
       firstPara = firstPara.length > maxLen ? firstPara.substr(0, maxLen) + "…" : firstPara;
       return `
 <a class="article-link" href="${authorId}/${name}">
-  <h3>${title}</h3>
-  <i>${byLine}</i>
-  <p>${firstPara}</p>
+<h3>${title}</h3>
+<i>${byLine}</i>
+<p>${firstPara}</p>
 </a>`;
-    })
-    .join("")
-);
+    });
+}
+
+Deno.writeTextFileSync("fragments/articles.html", makeArticlesFragment().join("\n"));
 
 //Build contributor fragments
 
@@ -109,6 +110,7 @@ contributors.forEach(c => {
     ([name, body, cites]) =>
       `<opinion data-cites="${cites}"><i>${name}.</i> ${body} <cite>${cites}</cite></opinion>`
   );
+  const articleEls = makeArticlesFragment(c);
   const descEls = verseDescs.map(([cite, body]) => {
     const verse = aue[c2n(cite)];
     body = body.split("\n").join("</p><p>");
@@ -118,15 +120,19 @@ contributors.forEach(c => {
   let html = "";
   if (opinionEls.length) {
     const els = opinionEls.join("\n");
-    html += `<column class="opinions"><h2 class="opinions">Opinions</h2><opinions>${els}</opinions></column>`;
+    html += `\n<column class="opinions"><h2 class="opinions">Opinions</h2><opinions>${els}</opinions></column>`;
+  }
+  if (articleEls.length) {
+    const els = articleEls.join("\n");
+    html += `\n<column class="articles"><h2>Articles</h2>${els}</column>`;
   }
   if (descEls.length) {
     const els = descEls.join("\n");
-    html += `<column class="descs"><h2>Verse Descriptions</h2><descs>${els}</descs></column>`;
+    html += `\n<column class="descs"><h2>Verse Descriptions</h2><descs>${els}</descs></column>`;
   }
   if (materialEls.length) {
     const els = materialEls.join("\n");
-    html += `<column class="thin materials"><h2>Materials</h2><materials>${els}</materials></column>`;
+    html += `\n<column class="thin materials"><h2>Materials</h2><materials>${els}</materials></column>`;
   }
   Deno.writeTextFileSync(`fragments/contributions/${c}-inner.html`, html);
   Deno.writeTextFileSync(

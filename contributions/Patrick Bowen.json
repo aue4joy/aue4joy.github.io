@@ -241,6 +241,11 @@
       "A fun, practical, modern series exploring concepts of neurobiology and psychology both lay and academic. Though it uses small participant sizes, it readily cites wider research and forms great habits of curiosity in its audience."
     ],
     [
+      "Snake Evolution AI",
+      "https://phunanon.github.io/SnakeAI/",
+      "This is a demonstration of survival of the fittest as small a web app. The artificial brain learns over time to play the classic game of Snake by continuously breeding the best performers from a population of mutated individuals. It also gives example of a deterministic universe, for each time you open the webpage even after the 10,000th generation of breeding the individuals are exactly the same."
+    ],
+    [
       "Piltdown Man",
       "https://en.wikipedia.org/wiki/Piltdown_Man",
       "An example of how critical faith in science was exercised, in the face of fake evidence. For some time the conclusions drawn from its findings were accepted, but not by all, and rejected once found out. It is important that its legacy among the public was rectified, and its false findings are archived."
