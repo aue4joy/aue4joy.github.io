@@ -1,3 +1,17 @@
+<script src="/index.js"></script>
+<script>
+window.onload = function() {
+  var contributor = window.location.pathname.replace(/\//g, "");
+  if (contributor) {
+    document.getElementById("contributor").value = contributor;
+  }
+  setTimeout("FirstLoad()", 100);
+}
+
+function DomContributor(that) {
+  window.location.href = "/" + that.value.replaceAll(" ", "");
+}
+</script>
 <column class="thin">
   {{h1}} {{doctrine}}
   <br />

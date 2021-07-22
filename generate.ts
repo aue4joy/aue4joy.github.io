@@ -11,6 +11,7 @@ const contributors = [...Deno.readDirSync("contributions")].map(e => e.name.spli
   const first = "Patrick Bowen";
   contributors.sort((x, y) => (x == first ? -1 : y == first ? 1 : 0));
 }
+const defaultKeywords = "Aue,religion,atheist";
 
 //Delete directories
 
@@ -60,9 +61,10 @@ const articles = [...walkSync("articles", { includeDirs: false })].map(({ name, 
   const content = Deno.readTextFileSync(path);
   const title = content.match(/<h1>(.+?)<\/h1>/)?.[1] ?? "Unknown article";
   const firstPara = content.match(/<p>((?:.|\s)+?)<\/p>/m)?.[1] ?? "";
-  const byLine = content.match(/<h3>((?:.|\s)+?)<\/h3>/)?.[1] ?? "";
+  const byLine = content.match(/<p class="by-line">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
   const date = Date.parse(byLine.match(/\d+-\d+-\d+/)?.[0] ?? "");
-  return { name, title, path, byLine, date, author, authorId, firstPara };
+  const keywords = content.match(/<p class="keywords">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
+  return { name, title, path, byLine, date, author, authorId, firstPara, keywords };
 });
 articles.sort(({ date: b }, { date: a }) => a - b);
 
@@ -73,7 +75,7 @@ function makeArticlesFragment(forAuthor?: string) {
       const maxLen = 200;
       firstPara = firstPara.length > maxLen ? firstPara.substr(0, maxLen) + "…" : firstPara;
       return `
-<a class="article-link" href="${authorId}/${name}">
+<a class="article-link" href="/${authorId}/${name}">
 <h3>${title}</h3>
 <i>${byLine}</i>
 <p>${firstPara}</p>
@@ -124,7 +126,7 @@ contributors.forEach(c => {
   }
   if (articleEls.length) {
     const els = articleEls.join("\n");
-    html += `\n<column class="articles"><h2>Articles</h2>${els}</column>`;
+    html += `\n<column class="wide articles"><h2>Articles</h2>${els}</column>`;
   }
   if (descEls.length) {
     const els = descEls.join("\n");
@@ -188,25 +190,34 @@ Deno.writeTextFileSync(
   target("index")
     .replace("[[title]]", "Aue - a religion")
     .replace("[[desc]]", "A modern atheistic religion, focusing on joy & woe.")
+    .replace("[[author-name]]", "Patrick Bowen")
+    .replace("[[keywords]]", defaultKeywords)
 );
 
 //Generate contributor endpoints
 
-contributors.forEach(c => {
-  const title = `${c} - Aue - a religion`;
-  const desc = `${c} gives their opinions, decriptions, materials, and articles on Aue - a modern religion`;
-  c = woSp(c);
-  const dir = `docs/${c}`;
+contributors.forEach(contributor => {
+  const title = `${contributor} - Aue - a religion`;
+  const desc = `${contributor} gives their opinions, descriptions, materials, and articles on Aue - a modern religion`;
+  const id = woSp(contributor);
+  const dir = `docs/${id}`;
   mkdir(dir);
   Deno.writeTextFileSync(
     `${dir}/index.html`,
-    target(c).replace("[[title]]", title).replace("[[desc]]", desc)
+    target(id)
+      .replace("[[title]]", title)
+      .replace("[[desc]]", desc)
+      .replace("[[author-name]]", contributor)
+      .replace(
+        "[[keywords]]",
+        `${defaultKeywords},adherent,articles,materials,opinions`
+      )
   );
 });
 
 //Generate article endpoints
 
-articles.forEach(({ name, author, authorId, title, firstPara }) => {
+articles.forEach(({ name, author, authorId, title, firstPara, keywords }) => {
   const dir = `docs/${authorId}`;
   const desc = `${firstPara.replace(/\s+/g, " ").trim().substr(0, 150)}…`;
   mkdir(dir);
@@ -217,6 +228,8 @@ articles.forEach(({ name, author, authorId, title, firstPara }) => {
     content
       .replace("[[title]]", `${title} - ${author}`)
       .replace("[[desc]]", desc)
+      .replace("[[author-name]]", author)
+      .replace("[[keywords]]", `${defaultKeywords},${keywords}`)
   );
 });
 

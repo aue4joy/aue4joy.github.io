@@ -59,6 +59,10 @@ column {
   display: inline-block;
   margin: 1rem;
 }
+column.wide {
+  display: block;
+  max-width: unset;
+}
 
 opinions {
   display: flex;
@@ -96,9 +100,6 @@ material {
   line-height: 1.5rem;
 }
 
-column.articles {
-  display: block;
-}
 column.articles .article-link {
   display: inline-block;
   width: 20rem;

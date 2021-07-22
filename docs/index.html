@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=0.8" />
-    <meta
-      name="description"
-      content="A modern atheistic religion, focusing on joy & woe."
-    />
+    <meta name="description" content="A modern atheistic religion, focusing on joy & woe.">
+    <meta name="author" content="Patrick Bowen">
+    <meta name="keywords" content="Aue,religion,atheist">
     <meta property="og:image" content="https://aue4joy.github.io/Aue64.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="64">
@@ -19,9 +18,10 @@
     />
     <link rel="icon" type="image/svg+xml" href="/Aue.svg" />
     <link rel="stylesheet" href="/index.css" />
-    <script src="/index.js"></script>
-    <script>
-function DomLoad() {
+  </head>
+  <body> <script src="/index.js"></script>
+<script>
+window.onload = function() {
   var contributor = window.location.pathname.replace(/\//g, "");
   if (contributor) {
     document.getElementById("contributor").value = contributor;
@@ -32,9 +32,8 @@ function DomLoad() {
 function DomContributor(that) {
   window.location.href = "/" + that.value.replaceAll(" ", "");
 }
-    </script>
-  </head>
-  <body onload="DomLoad()"> <column class="thin">
+</script>
+<column class="thin">
   <h1>
   <a href="/" class="muted vert2">
     <img src="/Aue.svg" width="32" height="32" alt="Aue symbol" /> Aue
@@ -107,7 +106,16 @@ function DomContributor(that) {
 <column class="thin">
   <h2>Articles</h2>
   
-<a class="article-link" href="PatrickBowen/OurSurvivors">
+<a class="article-link" href="/PatrickBowen/WeAreMachines">
+<h3>We are machines, and it doesn't matter</h3>
+<i>Patrick Bowen, 2021-07-21</i>
+<p>
+      Previously, other species were considered mechanical objects, unable to truly experience pain,
+      suffering, love or desire; that they simply responded to biomechanical urges. We have
+      …</p>
+</a>
+
+<a class="article-link" href="/PatrickBowen/OurSurvivors">
 <h3>Ancestors and heritage&mdash;our survivors</h3>
 <i>Patrick Bowen, 2021-07-13</i>
 <p>
@@ -116,7 +124,7 @@ function DomContributor(that) {
     …</p>
 </a>
 
-<a class="article-link" href="PatrickBowen/SatanismHumanismCompared">
+<a class="article-link" href="/PatrickBowen/SatanismHumanismCompared">
 <h3>Aue compared to Humanism and Satanism</h3>
 <i>Patrick Bowen, 2021-06-13</i>
 <p>
