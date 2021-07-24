@@ -60,7 +60,7 @@ const articles = [...walkSync("articles", { includeDirs: false })].map(({ name, 
   const authorId = woSp(author);
   const content = Deno.readTextFileSync(path);
   const title = content.match(/<h1>(.+?)<\/h1>/)?.[1] ?? "Unknown article";
-  const firstPara = content.match(/<p>((?:.|\s)+?)<\/p>/m)?.[1] ?? "";
+  const firstPara = content.match(/<p>((?:.|\s)+?)<\/p>/m)?.[1].replaceAll(/<\/?[^>]+>/g, "") ?? "";
   const byLine = content.match(/<p class="by-line">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
   const date = Date.parse(byLine.match(/\d+-\d+-\d+/)?.[0] ?? "");
   const keywords = content.match(/<p class="keywords">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
