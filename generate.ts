@@ -1,12 +1,15 @@
-import { existsSync, walkSync } from "https://deno.land/std@0.99.0/fs/mod.ts";
+import { writeFileSync, readFileSync, readdirSync } from "fs";
+import { statSync, rmSync, existsSync, mkdirSync } from "fs";
+import walkSync = require("walk-sync");
 
-const readJson = (path: string) => JSON.parse(Deno.readTextFileSync(path));
-const woSp = (text: string) => text.replaceAll(" ", "");
+const readJson = (path: string) => JSON.parse(readFileSync(path).toString());
+const woSp = (text: string) => text.replace(/ /g, "");
 const n2c = (n: number) => String.fromCharCode(n + 97);
 const c2n = (c: string) => c.charCodeAt(0) - 97;
+const last = <T>(arr: T[]) => arr[arr.length - 1];
 
 const { aue }: { aue: string[] } = readJson("aue.json");
-const contributors = [...Deno.readDirSync("contributions")].map(e => e.name.split(".")[0]);
+const contributors = [...readdirSync("contributions")].map(e => e.split(".")[0]);
 {
   const first = "Patrick Bowen";
   contributors.sort((x, y) => (x == first ? -1 : y == first ? 1 : 0));
@@ -16,32 +19,32 @@ const defaultKeywords = "Aue,religion,atheist";
 //Delete directories
 
 const rmdirs = (dir: string) =>
-  [...Deno.readDirSync(dir)]
-    .filter(e => e.isDirectory && e.name != "cards")
-    .forEach(e => Deno.removeSync(`${dir}/${e.name}`, { recursive: true }));
+  [...readdirSync(dir)]
+    .filter(e => statSync(dir + e).isDirectory() && e != "cards")
+    .forEach(e => rmSync(dir + e, { recursive: true, force: true }));
 rmdirs("docs/");
 rmdirs("fragments/");
 
 //Create empty directories
 
-const mkdir = (dir: string) => existsSync(dir) || Deno.mkdirSync(dir);
+const mkdir = (dir: string) => existsSync(dir) || mkdirSync(dir);
 ["fragments/articles", "fragments/contributions", "docs/wallpaper"].forEach(mkdir);
 
 //Build verses.html fragment
 
-Deno.writeTextFileSync(
+writeFileSync(
   "fragments/verses.html",
   aue
     .map((v, i) => {
       const cite = n2c(i);
       return `<verse data-cite="${cite}"><cite>${cite}</cite> ${v}</verse>\n`;
     })
-    .join("")
+    .join(""),
 );
 
 //Build contributors.html fragment
 
-Deno.writeTextFileSync(
+writeFileSync(
   "fragments/contributors.html",
   `<select id="contributor" onchange="DomContributor(this)">
   <option></option>
@@ -49,18 +52,19 @@ Deno.writeTextFileSync(
     .map(c => {
       return `<option value="${woSp(c)}">${c}</option>`;
     })
-    .join("")}</select>`
+    .join("")}</select>`,
 );
 
 //Build articles.html fragment
 
-const articles = [...walkSync("articles", { includeDirs: false })].map(({ name, path }) => {
-  [name] = name.split(".");
+const articles = [...walkSync("articles", { directories: false })].map(path => {
+  path = "articles/" + path;
+  const [name] = last(path.split("/")).split(".");
   const [_, author] = path.split("/");
   const authorId = woSp(author);
-  const content = Deno.readTextFileSync(path);
+  const content = readFileSync(path).toString();
   const title = content.match(/<h1>(.+?)<\/h1>/)?.[1] ?? "Unknown article";
-  const firstPara = content.match(/<p>((?:.|\s)+?)<\/p>/m)?.[1].replaceAll(/<\/?[^>]+>/g, "") ?? "";
+  const firstPara = content.match(/<p>((?:.|\s)+?)<\/p>/m)?.[1].replace(/<\/?[^>]+>/g, "") ?? "";
   const byLine = content.match(/<p class="by-line">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
   const date = Date.parse(byLine.match(/\d+-\d+-\d+/)?.[0] ?? "");
   const keywords = content.match(/<p class="keywords">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
@@ -83,7 +87,7 @@ function makeArticlesFragment(forAuthor?: string) {
     });
 }
 
-Deno.writeTextFileSync("fragments/articles.html", makeArticlesFragment().join("\n"));
+writeFileSync("fragments/articles.html", makeArticlesFragment().join("\n"));
 
 //Build contributor fragments
 
@@ -110,7 +114,7 @@ contributors.forEach(c => {
   c = woSp(c);
   const opinionEls = opinions.map(
     ([name, body, cites]) =>
-      `<opinion data-cites="${cites}"><i>${name}.</i> ${body} <cite>${cites}</cite></opinion>`
+      `<opinion data-cites="${cites}"><i>${name}.</i> ${body} <cite>${cites}</cite></opinion>`,
   );
   const articleEls = makeArticlesFragment(c);
   const descEls = verseDescs.map(([cite, body]) => {
@@ -136,27 +140,24 @@ contributors.forEach(c => {
     const els = materialEls.join("\n");
     html += `\n<column class="thin materials"><h2>Materials</h2><materials>${els}</materials></column>`;
   }
-  Deno.writeTextFileSync(`fragments/contributions/${c}-inner.html`, html);
-  Deno.writeTextFileSync(
-    `fragments/contributions/${c}.html`,
-    `{{header}}{{core}}{{${c}-inner}}{{footer}}`
-  );
+  writeFileSync(`fragments/contributions/${c}-inner.html`, html);
+  writeFileSync(`fragments/contributions/${c}.html`, `{{header}}{{core}}{{${c}-inner}}{{footer}}`);
 });
 
 //Build article fragments
 
 articles.forEach(({ name, title, author, authorId }) =>
-  Deno.writeTextFileSync(
+  writeFileSync(
     `fragments/articles/${authorId}---${name}.html`,
-    `{{header}}{{article}}${Deno.readTextFileSync(`articles/${author}/${name}.html`)}{{footer}}`
-  )
+    `{{header}}{{article}}${readFileSync(`articles/${author}/${name}.html`)}{{footer}}`,
+  ),
 );
 
 //Collect fragments
 
-const targets = [...walkSync("fragments")]
-  .filter(e => e.isFile)
-  .map(e => [e.name.split(".")[0], Deno.readTextFileSync(e.path)])
+const targets = [...walkSync("fragments", { directories: false })]
+  .map(path => `fragments/${path}`)
+  .map(path => [last(path.split("/")).split(".")[0], readFileSync(path).toString()])
   .map(([name, text]) => ({
     name,
     text,
@@ -176,7 +177,7 @@ while ((unresolved = targets.filter(t => t.deps.length)).length) {
     if (!resolvable) {
       return;
     }
-    u.text = u.text.replaceAll(`{{${resolvable.name}}}`, resolvable.text);
+    u.text = u.text.replace(new RegExp(`{{${resolvable.name}}}`, "g"), resolvable.text);
     u.deps.shift();
   });
 }
@@ -185,13 +186,13 @@ const target = (name: string) => targets.find(t => t.name == name)?.text ?? "";
 
 //Generate index.html
 
-Deno.writeTextFileSync(
+writeFileSync(
   "docs/index.html",
   target("index")
     .replace("[[title]]", "Aue - a religion")
     .replace("[[desc]]", "A modern atheistic religion, focusing on joy & woe.")
     .replace("[[author-name]]", "Patrick Bowen")
-    .replace("[[keywords]]", defaultKeywords)
+    .replace("[[keywords]]", defaultKeywords),
 );
 
 //Generate contributor endpoints
@@ -202,16 +203,13 @@ contributors.forEach(contributor => {
   const id = woSp(contributor);
   const dir = `docs/${id}`;
   mkdir(dir);
-  Deno.writeTextFileSync(
+  writeFileSync(
     `${dir}/index.html`,
     target(id)
       .replace("[[title]]", title)
       .replace("[[desc]]", desc)
       .replace("[[author-name]]", contributor)
-      .replace(
-        "[[keywords]]",
-        `${defaultKeywords},adherent,articles,materials,opinions`
-      )
+      .replace("[[keywords]]", `${defaultKeywords},adherent,articles,materials,opinions`),
   );
 });
 
@@ -223,17 +221,17 @@ articles.forEach(({ name, author, authorId, title, firstPara, keywords }) => {
   mkdir(dir);
   mkdir(`${dir}/${name}`);
   const content = target(`${authorId}---${name}`);
-  Deno.writeTextFileSync(
+  writeFileSync(
     `${dir}/${name}/index.html`,
     content
       .replace("[[title]]", `${title} - ${author}`)
       .replace("[[desc]]", desc)
       .replace("[[author-name]]", author)
-      .replace("[[keywords]]", `${defaultKeywords},${keywords}`)
+      .replace("[[keywords]]", `${defaultKeywords},${keywords}`),
   );
 });
 
 //Generate cards and wallpaper endpoint
 
-Deno.writeTextFileSync("docs/cards/index.html", target("cards"));
-Deno.writeTextFileSync("docs/wallpaper/index.html", target("wallpaper"));
+writeFileSync("docs/cards/index.html", target("cards"));
+writeFileSync("docs/wallpaper/index.html", target("wallpaper"));

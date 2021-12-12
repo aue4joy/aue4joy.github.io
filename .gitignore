@@ -4,3 +4,5 @@ fragments/verses.html
 !docs/cards/*
 !docs/wallpaper/*
 private
+node_modules
+.*
