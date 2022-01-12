@@ -3,6 +3,7 @@
     "lib": ["ESNext"],
     "moduleResolution": "node",
     "downlevelIteration": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "strict": true,
   }
 }

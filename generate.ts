@@ -106,23 +106,25 @@ contributors.forEach(c => {
     materials,
     charities,
   }: {
-    opinions: [string, string, string][];
-    verseDescs: [string, string][];
-    materials: [string, string | string[], string];
-    charities: string[];
+    opinions?: [string, string, string][];
+    verseDescs?: [string, string][];
+    materials?: [string, string | string[], string];
+    charities?: string[];
   } = readJson(`contributions/${c}.json`);
   c = woSp(c);
-  const opinionEls = opinions.map(
+  const opinionEls = (opinions ?? []).map(
     ([name, body, cites]) =>
       `<opinion data-cites="${cites}"><i>${name}.</i> ${body} <cite>${cites}</cite></opinion>`,
   );
   const articleEls = makeArticlesFragment(c);
-  const descEls = verseDescs.map(([cite, body]) => {
+  const descEls = (verseDescs ?? []).map(([cite, body]) => {
     const verse = aue[c2n(cite)];
     body = body.split("\n").join("</p><p>");
     return `<description><cite>${cite}</cite> <b>${verse}</b> <p>${body}</p></description>`;
   });
-  const materialEls = materials.map(([title, urls, body]) => materialHtml(title, urls, body));
+  const materialEls = (materials ?? []).map(([title, urls, body]) =>
+    materialHtml(title, urls, body),
+  );
   let html = "";
   if (opinionEls.length) {
     const els = opinionEls.join("\n");
@@ -190,7 +192,7 @@ writeFileSync(
   "docs/index.html",
   target("index")
     .replace("[[title]]", "Aue - a religion")
-    .replace("[[desc]]", "A modern atheistic religion, focusing on joy & woe.")
+    .replace("[[desc]]", "A modern naturalistic religion, focusing on joy & woe.")
     .replace("[[author-name]]", "Patrick Bowen")
     .replace("[[keywords]]", defaultKeywords),
 );
@@ -199,7 +201,7 @@ writeFileSync(
 
 contributors.forEach(contributor => {
   const title = `${contributor} - Aue - a religion`;
-  const desc = `${contributor} gives their opinions, descriptions, materials, and articles on Aue - a modern religion`;
+  const desc = `${contributor} gives their opinions, descriptions, materials, and articles on Aue - a modern religion.`;
   const id = woSp(contributor);
   const dir = `docs/${id}`;
   mkdir(dir);
@@ -220,7 +222,7 @@ articles.forEach(({ name, author, authorId, title, firstPara, keywords }) => {
   const desc = `${firstPara.replace(/\s+/g, " ").trim().substr(0, 150)}…`;
   mkdir(dir);
   mkdir(`${dir}/${name}`);
-  const content = target(`${authorId}---${name}`);
+  const content = target(`${authorId}---${name}`).replace(/'/g, "&rsquo;");
   writeFileSync(
     `${dir}/${name}/index.html`,
     content

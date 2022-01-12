@@ -7,4 +7,5 @@
     },
     "liveServer.settings.root": "/docs",
     "prettier.printWidth": 100,
+    "prettier.proseWrap": "always",
 }

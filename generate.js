@@ -105,18 +105,18 @@ function materialHtml(title, urls, comment) {
 contributors.forEach(function (c) {
     var _a = readJson("contributions/" + c + ".json"), opinions = _a.opinions, verseDescs = _a.verseDescs, materials = _a.materials, charities = _a.charities;
     c = woSp(c);
-    var opinionEls = opinions.map(function (_a) {
+    var opinionEls = (opinions !== null && opinions !== void 0 ? opinions : []).map(function (_a) {
         var _b = __read(_a, 3), name = _b[0], body = _b[1], cites = _b[2];
         return "<opinion data-cites=\"" + cites + "\"><i>" + name + ".</i> " + body + " <cite>" + cites + "</cite></opinion>";
     });
     var articleEls = makeArticlesFragment(c);
-    var descEls = verseDescs.map(function (_a) {
+    var descEls = (verseDescs !== null && verseDescs !== void 0 ? verseDescs : []).map(function (_a) {
         var _b = __read(_a, 2), cite = _b[0], body = _b[1];
         var verse = aue[c2n(cite)];
         body = body.split("\n").join("</p><p>");
         return "<description><cite>" + cite + "</cite> <b>" + verse + "</b> <p>" + body + "</p></description>";
     });
-    var materialEls = materials.map(function (_a) {
+    var materialEls = (materials !== null && materials !== void 0 ? materials : []).map(function (_a) {
         var _b = __read(_a, 3), title = _b[0], urls = _b[1], body = _b[2];
         return materialHtml(title, urls, body);
     });
@@ -174,7 +174,7 @@ var target = function (name) { var _a, _b; return (_b = (_a = targets.find(funct
 //Generate index.html
 (0, fs_1.writeFileSync)("docs/index.html", target("index")
     .replace("[[title]]", "Aue - a religion")
-    .replace("[[desc]]", "A modern atheistic religion, focusing on joy & woe.")
+    .replace("[[desc]]", "A modern naturalistic religion, focusing on joy & woe.")
     .replace("[[author-name]]", "Patrick Bowen")
     .replace("[[keywords]]", defaultKeywords));
 //Generate contributor endpoints
@@ -197,7 +197,7 @@ articles.forEach(function (_a) {
     var desc = firstPara.replace(/\s+/g, " ").trim().substr(0, 150) + "\u2026";
     mkdir(dir);
     mkdir(dir + "/" + name);
-    var content = target(authorId + "---" + name);
+    var content = target(authorId + "---" + name).replace(/'/g, "&rsquo;");
     (0, fs_1.writeFileSync)(dir + "/" + name + "/index.html", content
         .replace("[[title]]", title + " - " + author)
         .replace("[[desc]]", desc)
