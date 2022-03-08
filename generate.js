@@ -180,7 +180,7 @@ var target = function (name) { var _a, _b; return (_b = (_a = targets.find(funct
 //Generate contributor endpoints
 contributors.forEach(function (contributor) {
     var title = contributor + " - Aue - a religion";
-    var desc = contributor + " gives their opinions, descriptions, materials, and articles on Aue - a modern religion";
+    var desc = contributor + " gives their opinions, descriptions, materials, and articles on Aue - a modern religion.";
     var id = woSp(contributor);
     var dir = "docs/" + id;
     mkdir(dir);
