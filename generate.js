@@ -54,15 +54,15 @@ var mkdir = function (dir) { return (0, fs_2.existsSync)(dir) || (0, fs_2.mkdirS
 (0, fs_1.writeFileSync)("fragments/verses.html", aue
     .map(function (v, i) {
     var cite = n2c(i);
-    return "<verse data-cite=\"" + cite + "\"><cite>" + cite + "</cite> " + v + "</verse>\n";
+    return "<verse data-cite=\"".concat(cite, "\"><cite>").concat(cite, "</cite> ").concat(v, "</verse>\n");
 })
     .join(""));
 //Build contributors.html fragment
-(0, fs_1.writeFileSync)("fragments/contributors.html", "<select id=\"contributor\" onchange=\"DomContributor(this)\">\n  <option></option>\n  " + contributors
+(0, fs_1.writeFileSync)("fragments/contributors.html", "<select id=\"contributor\" onchange=\"DomContributor(this)\">\n  <option></option>\n  ".concat(contributors
     .map(function (c) {
-    return "<option value=\"" + woSp(c) + "\">" + c + "</option>";
+    return "<option value=\"".concat(woSp(c), "\">").concat(c, "</option>");
 })
-    .join("") + "</select>");
+    .join(""), "</select>"));
 //Build articles.html fragment
 var articles = __spreadArray([], __read(walkSync("articles", { directories: false })), false).map(function (path) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
@@ -90,7 +90,7 @@ function makeArticlesFragment(forAuthor) {
         var name = _a.name, title = _a.title, byLine = _a.byLine, authorId = _a.authorId, firstPara = _a.firstPara;
         var maxLen = 200;
         firstPara = firstPara.length > maxLen ? firstPara.substr(0, maxLen) + "…" : firstPara;
-        return "\n<a class=\"article-link\" href=\"/" + authorId + "/" + name + "\">\n<h3>" + title + "</h3>\n<i>" + byLine + "</i>\n<p>" + firstPara + "</p>\n</a>";
+        return "\n<a class=\"article-link\" href=\"/".concat(authorId, "/").concat(name, "\">\n<h3>").concat(title, "</h3>\n<i>").concat(byLine, "</i>\n<p>").concat(firstPara, "</p>\n</a>");
     });
 }
 (0, fs_1.writeFileSync)("fragments/articles.html", makeArticlesFragment().join("\n"));
@@ -98,23 +98,23 @@ function makeArticlesFragment(forAuthor) {
 function materialHtml(title, urls, comment) {
     var punc = title.endsWith("?") ? "" : ".";
     var titleHtml = Array.isArray(urls)
-        ? "<i>" + title + "</i> (" + urls.map(function (u, i) { return "<a href=\"" + u + "\">" + (i + 1) + "</a>"; }).join(", ") + ")"
-        : "<a href=\"" + urls + "\"><i>" + title + "</i></a>";
-    return "<material>" + titleHtml + punc + " " + comment + "</material>";
+        ? "<i>".concat(title, "</i> (").concat(urls.map(function (u, i) { return "<a href=\"".concat(u, "\">").concat(i + 1, "</a>"); }).join(", "), ")")
+        : "<a href=\"".concat(urls, "\"><i>").concat(title, "</i></a>");
+    return "<material>".concat(titleHtml).concat(punc, " ").concat(comment, "</material>");
 }
 contributors.forEach(function (c) {
-    var _a = readJson("contributions/" + c + ".json"), opinions = _a.opinions, verseDescs = _a.verseDescs, materials = _a.materials, charities = _a.charities;
+    var _a = readJson("contributions/".concat(c, ".json")), opinions = _a.opinions, verseDescs = _a.verseDescs, materials = _a.materials, charities = _a.charities;
     c = woSp(c);
     var opinionEls = (opinions !== null && opinions !== void 0 ? opinions : []).map(function (_a) {
         var _b = __read(_a, 3), name = _b[0], body = _b[1], cites = _b[2];
-        return "<opinion data-cites=\"" + cites + "\"><i>" + name + ".</i> " + body + " <cite>" + cites + "</cite></opinion>";
+        return "<opinion data-cites=\"".concat(cites, "\"><i>").concat(name, ".</i> ").concat(body, " <cite>").concat(cites, "</cite></opinion>");
     });
     var articleEls = makeArticlesFragment(c);
     var descEls = (verseDescs !== null && verseDescs !== void 0 ? verseDescs : []).map(function (_a) {
         var _b = __read(_a, 2), cite = _b[0], body = _b[1];
         var verse = aue[c2n(cite)];
         body = body.split("\n").join("</p><p>");
-        return "<description><cite>" + cite + "</cite> <b>" + verse + "</b> <p>" + body + "</p></description>";
+        return "<description><cite>".concat(cite, "</cite> <b>").concat(verse, "</b> <p>").concat(body, "</p></description>");
     });
     var materialEls = (materials !== null && materials !== void 0 ? materials : []).map(function (_a) {
         var _b = __read(_a, 3), title = _b[0], urls = _b[1], body = _b[2];
@@ -123,30 +123,30 @@ contributors.forEach(function (c) {
     var html = "";
     if (opinionEls.length) {
         var els = opinionEls.join("\n");
-        html += "\n<column class=\"opinions\"><h2 class=\"opinions\">Opinions</h2><opinions>" + els + "</opinions></column>";
+        html += "\n<column class=\"opinions\"><h2 class=\"opinions\">Opinions</h2><opinions>".concat(els, "</opinions></column>");
     }
     if (articleEls.length) {
         var els = articleEls.join("\n");
-        html += "\n<column class=\"wide articles\"><h2>Articles</h2>" + els + "</column>";
+        html += "\n<column class=\"wide articles\"><h2>Articles</h2>".concat(els, "</column>");
     }
     if (descEls.length) {
         var els = descEls.join("\n");
-        html += "\n<column class=\"descs\"><h2>Verse Descriptions</h2><descs>" + els + "</descs></column>";
+        html += "\n<column class=\"descs\"><h2>Verse Descriptions</h2><descs>".concat(els, "</descs></column>");
     }
     if (materialEls.length) {
         var els = materialEls.join("\n");
-        html += "\n<column class=\"thin materials\"><h2>Materials</h2><materials>" + els + "</materials></column>";
+        html += "\n<column class=\"thin materials\"><h2>Materials</h2><materials>".concat(els, "</materials></column>");
     }
-    (0, fs_1.writeFileSync)("fragments/contributions/" + c + "-inner.html", html);
-    (0, fs_1.writeFileSync)("fragments/contributions/" + c + ".html", "{{header}}{{core}}{{" + c + "-inner}}{{footer}}");
+    (0, fs_1.writeFileSync)("fragments/contributions/".concat(c, "-inner.html"), html);
+    (0, fs_1.writeFileSync)("fragments/contributions/".concat(c, ".html"), "{{header}}{{core}}{{".concat(c, "-inner}}{{footer}}"));
 });
 //Build article fragments
 articles.forEach(function (_a) {
     var name = _a.name, title = _a.title, author = _a.author, authorId = _a.authorId;
-    return (0, fs_1.writeFileSync)("fragments/articles/" + authorId + "---" + name + ".html", "{{header}}{{article}}" + (0, fs_1.readFileSync)("articles/" + author + "/" + name + ".html") + "{{footer}}");
+    return (0, fs_1.writeFileSync)("fragments/articles/".concat(authorId, "---").concat(name, ".html"), "{{header}}{{article}}".concat((0, fs_1.readFileSync)("articles/".concat(author, "/").concat(name, ".html")), "{{footer}}"));
 });
 //Collect fragments
-var targets = __spreadArray([], __read(walkSync("fragments", { directories: false })), false).map(function (path) { return "fragments/" + path; })
+var targets = __spreadArray([], __read(walkSync("fragments", { directories: false })), false).map(function (path) { return "fragments/".concat(path); })
     .map(function (path) { return [last(path.split("/")).split(".")[0], (0, fs_1.readFileSync)(path).toString()]; })
     .map(function (_a) {
     var _b = __read(_a, 2), name = _b[0], text = _b[1];
@@ -166,7 +166,7 @@ while ((unresolved = targets.filter(function (t) { return t.deps.length; })).len
         if (!resolvable) {
             return;
         }
-        u.text = u.text.replace(new RegExp("{{" + resolvable.name + "}}", "g"), resolvable.text);
+        u.text = u.text.replace(new RegExp("{{".concat(resolvable.name, "}}"), "g"), resolvable.text);
         u.deps.shift();
     });
 }
@@ -179,30 +179,30 @@ var target = function (name) { var _a, _b; return (_b = (_a = targets.find(funct
     .replace("[[keywords]]", defaultKeywords));
 //Generate contributor endpoints
 contributors.forEach(function (contributor) {
-    var title = contributor + " - Aue - a religion";
-    var desc = contributor + " gives their opinions, descriptions, materials, and articles on Aue - a modern religion.";
+    var title = "".concat(contributor, " - Aue - a religion");
+    var desc = "".concat(contributor, " gives their opinions, descriptions, materials, and articles on Aue - a modern religion.");
     var id = woSp(contributor);
-    var dir = "docs/" + id;
+    var dir = "docs/".concat(id);
     mkdir(dir);
-    (0, fs_1.writeFileSync)(dir + "/index.html", target(id)
+    (0, fs_1.writeFileSync)("".concat(dir, "/index.html"), target(id)
         .replace("[[title]]", title)
         .replace("[[desc]]", desc)
         .replace("[[author-name]]", contributor)
-        .replace("[[keywords]]", defaultKeywords + ",adherent,articles,materials,opinions"));
+        .replace("[[keywords]]", "".concat(defaultKeywords, ",adherent,articles,materials,opinions")));
 });
 //Generate article endpoints
 articles.forEach(function (_a) {
     var name = _a.name, author = _a.author, authorId = _a.authorId, title = _a.title, firstPara = _a.firstPara, keywords = _a.keywords;
-    var dir = "docs/" + authorId;
-    var desc = firstPara.replace(/\s+/g, " ").trim().substr(0, 150) + "\u2026";
+    var dir = "docs/".concat(authorId);
+    var desc = "".concat(firstPara.replace(/\s+/g, " ").trim().substr(0, 150), "\u2026");
     mkdir(dir);
-    mkdir(dir + "/" + name);
-    var content = target(authorId + "---" + name).replace(/'/g, "&rsquo;");
-    (0, fs_1.writeFileSync)(dir + "/" + name + "/index.html", content
-        .replace("[[title]]", title + " - " + author)
+    mkdir("".concat(dir, "/").concat(name));
+    var content = target("".concat(authorId, "---").concat(name)).replace(/'/g, "&rsquo;");
+    (0, fs_1.writeFileSync)("".concat(dir, "/").concat(name, "/index.html"), content
+        .replace("[[title]]", "".concat(title, " - ").concat(author))
         .replace("[[desc]]", desc)
         .replace("[[author-name]]", author)
-        .replace("[[keywords]]", defaultKeywords + "," + keywords));
+        .replace("[[keywords]]", "".concat(defaultKeywords, ",").concat(keywords)));
 });
 //Generate cards and wallpaper endpoint
 (0, fs_1.writeFileSync)("docs/cards/index.html", target("cards"));

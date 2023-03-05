@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "node generate.js"
+  },
+  "author": "Patrick Bowen",
+  "license": "CC-BY-4.0",
+  "dependencies": {
+    "walk-sync": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.6"
+  }
+}

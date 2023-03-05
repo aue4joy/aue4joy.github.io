@@ -130,7 +130,11 @@
       "Be aware of safe medical or scientific research, & participate & benefit with joy. Also donating material such as blood, tissue, or hair.",
       "gijkno"
     ],
-    ["Existence", "To us the universe is perfect as it needed to be so for our existence.", "fgn"],
+    [
+      "Existence",
+      "To us the universe is perfect as it needed to be so for our existence.",
+      "fgn"
+    ],
     [
       "Slavery",
       "Find & eliminate enslavement or encouragement into so, & ensure executives similarly laboured themselves.",
@@ -260,13 +264,21 @@
       "https://www.youtube.com/channel/UCZYTClx2T1of7BRZ86-8fow",
       "A digestible pop-science communication YouTube channel covering the old and new."
     ],
-    ["PBS Eons YouTube Channel", "https://www.youtube.com/channel/UCzR-rom72PHN9Zg7RML9EbA", ""],
+    [
+      "PBS Eons YouTube Channel",
+      "https://www.youtube.com/channel/UCzR-rom72PHN9Zg7RML9EbA",
+      ""
+    ],
     [
       "Healthline",
       "https://www.healthline.com/process",
       "A great resource for questions about daily health, diseases, conditions, diets, and other impacts of lifestyle on health. They are credible and science-first, keeping advice simple and effective.</a>."
     ],
-    ["Psychology Today", "https://www.psychologytoday.com/gb/docs/about-psychology-today", ""],
+    [
+      "Psychology Today",
+      "https://www.psychologytoday.com/gb/docs/about-psychology-today",
+      ""
+    ],
     [
       "Our World in Data",
       "https://ourworldindata.org",
@@ -281,7 +293,15 @@
       ],
       ""
     ],
-    ["The power of animism: John Reid", "https://www.youtube.com/watch?v=lmhFRarkw8E", ""]
+    [
+      "The power of animism: John Reid",
+      "https://www.youtube.com/watch?v=lmhFRarkw8E",
+      ""
+    ],
+    [
+      "The Future of AI’s Aesthetic Sense: From Imitation to True Appreciation",
+      "https://patrickbowen.medium.com/4bb46e128b6d"
+    ]
   ],
   "charities": []
 }
