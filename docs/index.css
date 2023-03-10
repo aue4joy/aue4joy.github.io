@@ -8,7 +8,10 @@
 }
 
 body {
-  padding: 1vw 2vw;
+  padding-left: max(2vw, 1rem);
+  padding-right: max(2vw, 1rem);
+  padding-top: max(1vw, 1rem);
+  padding-bottom: max(5vw, 5rem);
   background-color: #f4f8ff;
 }
 h1 img {
