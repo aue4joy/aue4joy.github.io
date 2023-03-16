@@ -1,29 +1,38 @@
 <script src="/index.js"></script>
 <script>
-window.onload = function() {
-  var contributor = window.location.pathname.replace(/\//g, "");
-  if (contributor) {
-    document.getElementById("contributor").value = contributor;
-  }
-  setTimeout("FirstLoad()", 100);
-}
+  window.onload = function () {
+    var contributor = window.location.pathname.replace(/\//g, "");
+    if (contributor) {
+      document.getElementById("contributor").value = contributor;
+    }
+    setTimeout("FirstLoad()", 100);
+  };
 
-function DomContributor(that) {
-  window.location.href = "/" + that.value.replaceAll(" ", "");
-}
+  function DomContributor(that) {
+    window.location.href = "/" + that.value.replaceAll(" ", "");
+  }
 </script>
 <column class="thin">
   {{h1}} {{doctrine}}
+  <p>
+    <footnote>
+      This is Aue, the entire doctrine for the religion of Aue.
+    </footnote>
+  </p>
   <br />
   <p class="unselectable">
     <a href="https://discord.gg/SVrmdQwt6y">
-      <img style="width: 12rem;" src="https://discord.com/api/guilds/866029217119600711/widget.png?style=banner2">
+      <img
+        style="width: 12rem"
+        src="https://discord.com/api/guilds/866029217119600711/widget.png?style=banner2"
+      />
     </a>
   </p>
   <br />
   <h2 class="vert4">Contributor {{contributors}}</h2>
   <p>
-    Aue is open for opinions, verse descriptions, and materials by different people. If you would
-    like to contribute, get in touch on Discord.
+    Aue is open for opinions, verse descriptions, articles, and curated
+    materials by different people. If you would like to contribute, get in touch
+    on Discord.
   </p>
 </column>
