@@ -9,7 +9,9 @@ const c2n = (c: string) => c.charCodeAt(0) - 97;
 const last = <T>(arr: T[]) => arr[arr.length - 1];
 
 const { aue }: { aue: string[] } = readJson("aue.json");
-const contributors = [...readdirSync("contributions")].map(e => e.split(".")[0]);
+const contributors = [...readdirSync("contributions")].map(
+  e => e.split(".")[0],
+);
 {
   const first = "Patrick Bowen";
   contributors.sort((x, y) => (x == first ? -1 : y == first ? 1 : 0));
@@ -28,7 +30,9 @@ rmdirs("fragments/");
 //Create empty directories
 
 const mkdir = (dir: string) => existsSync(dir) || mkdirSync(dir);
-["fragments/articles", "fragments/contributions", "docs/wallpaper"].forEach(mkdir);
+["fragments/articles", "fragments/contributions", "docs/wallpaper"].forEach(
+  mkdir,
+);
 
 //Build verses.html fragment
 
@@ -64,11 +68,18 @@ const articles = [...walkSync("articles", { directories: false })].map(path => {
   const authorId = woSp(author);
   const content = readFileSync(path).toString();
   const title = content.match(/<h1>(.+?)<\/h1>/)?.[1] ?? "Unknown article";
-  const firstPara = content.match(/<p>((?:.|\s)+?)<\/p>/m)?.[1].replace(/<\/?[^>]+>/g, "") ?? "";
-  const byLine = content.match(/<p class="by-line">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
+  const firstPara =
+    content.match(/<p>((?:.|\s)+?)<\/p>/m)?.[1].replace(/<\/?[^>]+>/g, "") ??
+    "";
+  const byLine =
+    content.match(/<p class="by-line">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
   const date = Date.parse(byLine.match(/\d+-\d+-\d+/)?.[0] ?? "");
-  const keywords = content.match(/<p class="keywords">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
-  return { name, title, path, byLine, date, author, authorId, firstPara, keywords };
+  const keywords =
+    content.match(/<p class="keywords">((?:.|\s)+?)<\/p>/)?.[1] ?? "";
+  return {
+    ...{ name, title, path, byLine, date },
+    ...{ author, authorId, firstPara, keywords },
+  };
 });
 articles.sort(({ date: b }, { date: a }) => a - b);
 
@@ -77,7 +88,10 @@ function makeArticlesFragment(forAuthor?: string) {
     .filter(a => !forAuthor || a.authorId == forAuthor)
     .map(({ name, title, byLine, authorId, firstPara }) => {
       const maxLen = 200;
-      firstPara = firstPara.length > maxLen ? firstPara.substr(0, maxLen) + "…" : firstPara;
+      firstPara =
+        firstPara.length > maxLen
+          ? firstPara.substring(0, maxLen) + "…"
+          : firstPara;
       return `
 <a class="article-link" href="/${authorId}/${name}">
 <h3>${title}</h3>
@@ -94,7 +108,9 @@ writeFileSync("fragments/articles.html", makeArticlesFragment().join("\n"));
 function materialHtml(title: string, urls: string | string[], comment: string) {
   const punc = title.endsWith("?") ? "" : ".";
   const titleHtml = Array.isArray(urls)
-    ? `<i>${title}</i> (${urls.map((u, i) => `<a href="${u}">${i + 1}</a>`).join(", ")})`
+    ? `<i>${title}</i> (${urls
+        .map((u, i) => `<a href="${u}">${i + 1}</a>`)
+        .join(", ")})`
     : `<a href="${urls}"><i>${title}</i></a>`;
   return `<material>${titleHtml}${punc} ${comment}</material>`;
 }
@@ -143,7 +159,10 @@ contributors.forEach(c => {
     html += `\n<column class="thin materials"><h2>Materials</h2><materials>${els}</materials></column>`;
   }
   writeFileSync(`fragments/contributions/${c}-inner.html`, html);
-  writeFileSync(`fragments/contributions/${c}.html`, `{{header}}{{core}}{{${c}-inner}}{{footer}}`);
+  writeFileSync(
+    `fragments/contributions/${c}.html`,
+    `{{header}}{{core}}{{${c}-inner}}{{footer}}`,
+  );
 });
 
 //Build article fragments
@@ -151,7 +170,9 @@ contributors.forEach(c => {
 articles.forEach(({ name, title, author, authorId }) =>
   writeFileSync(
     `fragments/articles/${authorId}---${name}.html`,
-    `{{header}}{{article}}${readFileSync(`articles/${author}/${name}.html`)}{{footer}}`,
+    `{{header}}{{article}}${readFileSync(
+      `articles/${author}/${name}.html`,
+    )}{{footer}}`,
   ),
 );
 
@@ -159,7 +180,10 @@ articles.forEach(({ name, title, author, authorId }) =>
 
 const targets = [...walkSync("fragments", { directories: false })]
   .map(path => `fragments/${path}`)
-  .map(path => [last(path.split("/")).split(".")[0], readFileSync(path).toString()])
+  .map(path => [
+    last(path.split("/")).split(".")[0],
+    readFileSync(path).toString(),
+  ])
   .map(([name, text]) => ({
     name,
     text,
@@ -168,7 +192,10 @@ const targets = [...walkSync("fragments", { directories: false })]
 
 //Find dependencies
 
-targets.forEach(t => (t.deps = [...new Set([...t.text.matchAll(/{{(.+?)}}/g)].map(g => g[1]))]));
+targets.forEach(
+  t =>
+    (t.deps = [...new Set([...t.text.matchAll(/{{(.+?)}}/g)].map(g => g[1]))]),
+);
 
 //Resolve dependencies
 
@@ -179,7 +206,10 @@ while ((unresolved = targets.filter(t => t.deps.length)).length) {
     if (!resolvable) {
       return;
     }
-    u.text = u.text.replace(new RegExp(`{{${resolvable.name}}}`, "g"), resolvable.text);
+    u.text = u.text.replace(
+      new RegExp(`{{${resolvable.name}}}`, "g"),
+      resolvable.text,
+    );
     u.deps.shift();
   });
 }
@@ -192,7 +222,10 @@ writeFileSync(
   "docs/index.html",
   target("index")
     .replace("[[title]]", "Aue - a religion")
-    .replace("[[desc]]", "A modern naturalistic religion, focusing on joy & woe.")
+    .replace(
+      "[[desc]]",
+      "A modern naturalistic religion, focusing on joy & woe.",
+    )
     .replace("[[author-name]]", "Patrick Bowen")
     .replace("[[keywords]]", defaultKeywords),
 );
@@ -211,7 +244,10 @@ contributors.forEach(contributor => {
       .replace("[[title]]", title)
       .replace("[[desc]]", desc)
       .replace("[[author-name]]", contributor)
-      .replace("[[keywords]]", `${defaultKeywords},adherent,articles,materials,opinions`),
+      .replace(
+        "[[keywords]]",
+        `${defaultKeywords},adherent,articles,materials,opinions`,
+      ),
   );
 });
 

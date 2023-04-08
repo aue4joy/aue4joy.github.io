@@ -6,3 +6,4 @@ fragments/verses.html
 private
 node_modules
 .*
+!.prettierrc
