@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "node generate.js"
+    "start": "node generate.js",
+    "watch": "nodemon generate.js --watch articles/**/* -e html"
   },
   "author": "Patrick Bowen",
   "license": "CC-BY-4.0",

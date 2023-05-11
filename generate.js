@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -49,7 +60,12 @@ rmdirs("docs/");
 rmdirs("fragments/");
 //Create empty directories
 var mkdir = function (dir) { return (0, fs_2.existsSync)(dir) || (0, fs_2.mkdirSync)(dir); };
-["fragments/articles", "fragments/contributions", "docs/wallpaper"].forEach(mkdir);
+[
+    "fragments/articles",
+    "fragments/contributions",
+    "docs/wallpaper",
+    "docs/forum",
+].forEach(mkdir);
 //Build verses.html fragment
 (0, fs_1.writeFileSync)("fragments/verses.html", aue
     .map(function (v, i) {
@@ -76,7 +92,7 @@ var articles = __spreadArray([], __read(walkSync("articles", { directories: fals
     var byLine = (_f = (_e = content.match(/<p class="by-line">((?:.|\s)+?)<\/p>/)) === null || _e === void 0 ? void 0 : _e[1]) !== null && _f !== void 0 ? _f : "";
     var date = Date.parse((_h = (_g = byLine.match(/\d+-\d+-\d+/)) === null || _g === void 0 ? void 0 : _g[0]) !== null && _h !== void 0 ? _h : "");
     var keywords = (_k = (_j = content.match(/<p class="keywords">((?:.|\s)+?)<\/p>/)) === null || _j === void 0 ? void 0 : _j[1]) !== null && _k !== void 0 ? _k : "";
-    return { name: name, title: title, path: path, byLine: byLine, date: date, author: author, authorId: authorId, firstPara: firstPara, keywords: keywords };
+    return __assign({ name: name, title: title, path: path, byLine: byLine, date: date }, { author: author, authorId: authorId, firstPara: firstPara, keywords: keywords });
 });
 articles.sort(function (_a, _b) {
     var b = _a.date;
@@ -89,7 +105,10 @@ function makeArticlesFragment(forAuthor) {
         .map(function (_a) {
         var name = _a.name, title = _a.title, byLine = _a.byLine, authorId = _a.authorId, firstPara = _a.firstPara;
         var maxLen = 200;
-        firstPara = firstPara.length > maxLen ? firstPara.substr(0, maxLen) + "…" : firstPara;
+        firstPara =
+            firstPara.length > maxLen
+                ? firstPara.substring(0, maxLen) + "…"
+                : firstPara;
         return "\n<a class=\"article-link\" href=\"/".concat(authorId, "/").concat(name, "\">\n<h3>").concat(title, "</h3>\n<i>").concat(byLine, "</i>\n<p>").concat(firstPara, "</p>\n</a>");
     });
 }
@@ -98,7 +117,9 @@ function makeArticlesFragment(forAuthor) {
 function materialHtml(title, urls, comment) {
     var punc = title.endsWith("?") ? "" : ".";
     var titleHtml = Array.isArray(urls)
-        ? "<i>".concat(title, "</i> (").concat(urls.map(function (u, i) { return "<a href=\"".concat(u, "\">").concat(i + 1, "</a>"); }).join(", "), ")")
+        ? "<i>".concat(title, "</i> (").concat(urls
+            .map(function (u, i) { return "<a href=\"".concat(u, "\">").concat(i + 1, "</a>"); })
+            .join(", "), ")")
         : "<a href=\"".concat(urls, "\"><i>").concat(title, "</i></a>");
     return "<material>".concat(titleHtml).concat(punc, " ").concat(comment, "</material>");
 }
@@ -147,7 +168,10 @@ articles.forEach(function (_a) {
 });
 //Collect fragments
 var targets = __spreadArray([], __read(walkSync("fragments", { directories: false })), false).map(function (path) { return "fragments/".concat(path); })
-    .map(function (path) { return [last(path.split("/")).split(".")[0], (0, fs_1.readFileSync)(path).toString()]; })
+    .map(function (path) { return [
+    last(path.split("/")).split(".")[0],
+    (0, fs_1.readFileSync)(path).toString(),
+]; })
     .map(function (_a) {
     var _b = __read(_a, 2), name = _b[0], text = _b[1];
     return ({
@@ -157,7 +181,9 @@ var targets = __spreadArray([], __read(walkSync("fragments", { directories: fals
     });
 });
 //Find dependencies
-targets.forEach(function (t) { return (t.deps = __spreadArray([], __read(new Set(__spreadArray([], __read(t.text.matchAll(/{{(.+?)}}/g)), false).map(function (g) { return g[1]; }))), false)); });
+targets.forEach(function (t) {
+    return (t.deps = __spreadArray([], __read(new Set(__spreadArray([], __read(t.text.matchAll(/{{(.+?)}}/g)), false).map(function (g) { return g[1]; }))), false));
+});
 //Resolve dependencies
 var unresolved;
 while ((unresolved = targets.filter(function (t) { return t.deps.length; })).length) {
@@ -204,7 +230,12 @@ articles.forEach(function (_a) {
         .replace("[[author-name]]", author)
         .replace("[[keywords]]", "".concat(defaultKeywords, ",").concat(keywords)));
 });
-//Generate cards and wallpaper endpoint
+//Generate cards, wallpaper, and forum endpoint
 (0, fs_1.writeFileSync)("docs/cards/index.html", target("cards"));
 (0, fs_1.writeFileSync)("docs/wallpaper/index.html", target("wallpaper"));
+(0, fs_1.writeFileSync)("docs/forum/index.html", target("forum")
+    .replace("[[title]]", "Forum")
+    .replace("[[desc]]", "A copy of the Discord forum made available")
+    .replace("[[author-name]]", "Patrick Bowen")
+    .replace("[[keywords]]", "".concat(defaultKeywords, ",forum")));
 //# sourceMappingURL=generate.js.map

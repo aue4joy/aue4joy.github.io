@@ -30,9 +30,12 @@ rmdirs("fragments/");
 //Create empty directories
 
 const mkdir = (dir: string) => existsSync(dir) || mkdirSync(dir);
-["fragments/articles", "fragments/contributions", "docs/wallpaper"].forEach(
-  mkdir,
-);
+[
+  "fragments/articles",
+  "fragments/contributions",
+  "docs/wallpaper",
+  "docs/forum",
+].forEach(mkdir);
 
 //Build verses.html fragment
 
@@ -269,7 +272,15 @@ articles.forEach(({ name, author, authorId, title, firstPara, keywords }) => {
   );
 });
 
-//Generate cards and wallpaper endpoint
+//Generate cards, wallpaper, and forum endpoint
 
 writeFileSync("docs/cards/index.html", target("cards"));
 writeFileSync("docs/wallpaper/index.html", target("wallpaper"));
+writeFileSync(
+  "docs/forum/index.html",
+  target("forum")
+    .replace("[[title]]", "Forum")
+    .replace("[[desc]]", "A copy of the Discord forum made available")
+    .replace("[[author-name]]", "Patrick Bowen")
+    .replace("[[keywords]]", `${defaultKeywords},forum`),
+);

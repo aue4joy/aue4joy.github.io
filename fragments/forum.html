@@ -1,0 +1,109 @@
+{{header}}
+<style>
+  .forum-thread {
+    display: block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #888;
+    cursor: pointer;
+  }
+  info {
+    color: #888;
+    display: block;
+  }
+  info pre {
+    font-family: monospace;
+    float: right;
+  }
+  #thread {
+    white-space: pre-wrap;
+  }
+  .forum-message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #888;
+  }
+</style>
+<script>
+  setTimeout(async function () {
+    const endpoint =
+      "https://aueforumreader.insitux.repl.co/866029217119600711/1085644308994068631";
+    try {
+      const threads = await fetch(endpoint);
+      const json = await threads.json();
+      const container = document.getElementById("threads");
+      container.innerHTML = "";
+      for (const thread of json) {
+        const a = document.createElement("a");
+        a.className = "forum-thread";
+        const h3 = document.createElement("h3");
+        h3.innerText = thread.title;
+        a.appendChild(h3);
+        const i = document.createElement("i");
+        const date = new Date(thread.createdTimestamp).toLocaleDateString();
+        i.innerHTML = thread.author + ", " + date;
+        a.appendChild(i);
+        const appended = container.appendChild(a);
+        appended.onclick = async function () {
+          window.scrollTo(0, 0);
+          const container = document.getElementById("thread");
+          container.innerHTML = "Loading...";
+          try {
+            const singleThread = await fetch(`${endpoint}/${thread.id}`);
+            const json = await singleThread.json();
+            container.innerHTML = `<h2>${thread.title}</h2>`;
+            for (const message of json) {
+              const div = document.createElement("div");
+              div.className = "forum-message";
+              const p = document.createElement("p");
+              const date = new Date(message.createdTimestamp).toLocaleString();
+              p.innerHTML = `<info><i>${message.author}</i><pre>${date}</pre></info><p>${message.content}</p>`;
+              div.appendChild(p);
+              container.appendChild(div);
+            }
+          } catch (e) {
+            console.error(e);
+            container.innerHTML = "Error loading thread ☹️";
+          }
+        };
+      }
+    } catch (e) {
+      console.error(e);
+      const container = document.getElementById("threads");
+      container.innerHTML = "Error loading threads ☹️";
+    }
+  });
+</script>
+<p style="line-height: 2rem">
+  <img src="/Aue.svg" width="32" height="32" />
+  <a href="/">Aue main website</a>
+</p>
+<column class="thin">
+  <p>
+    The Discord server for Aue has a forum, of which a read-only live copy is
+    provided here for the benefit of those who do not have Discord. You are able
+    to read threads here, but unfortunately not post. If you would like to post,
+    please join the Discord server.
+    <b>
+      The forum is only one of many channels available in the Discord server, so
+      don't miss out!
+    </b>
+  </p>
+  <br />
+  <p class="unselectable">
+    <a href="https://discord.gg/SVrmdQwt6y">
+      <img
+        style="width: 16rem"
+        src="https://discord.com/api/guilds/866029217119600711/widget.png?style=banner2"
+      />
+    </a>
+  </p>
+  <br />
+  <h2>Threads</h2>
+  <div id="threads">
+    <p><i>Loading...</i></p>
+  </div>
+</column>
+<column id="thread"></column>
+{{footer}}
