@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "Lora", serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: opacity 0.2s ease-in;
   vertical-align: top;
 }
@@ -35,7 +35,7 @@ a {
   color: unset;
 }
 .vert2 {
-  line-height: 2rem;
+  line-height: 1.5rem;
 }
 .vert4 {
   line-height: 4rem;

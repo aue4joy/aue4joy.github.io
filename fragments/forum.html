@@ -46,8 +46,8 @@
         a.appendChild(i);
         const appended = container.appendChild(a);
         appended.onclick = async function () {
-          window.scrollTo(0, 0);
           const container = document.getElementById("thread");
+          container.scrollIntoView();
           container.innerHTML = "Loading...";
           try {
             const singleThread = await fetch(`${endpoint}/${thread.id}`);
