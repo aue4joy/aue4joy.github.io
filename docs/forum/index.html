@@ -46,6 +46,9 @@
     font-family: monospace;
     float: right;
   }
+  count {
+    float: right;
+  }
   #thread {
     white-space: pre-wrap;
   }
@@ -54,8 +57,15 @@
     margin-bottom: 1rem;
     border: 1px solid #888;
   }
+  .forum-message img {
+    max-width: 24rem;
+  }
 </style>
 <script>
+  function isImg(url) {
+    return url.endsWith(".png") || url.endsWith(".jpg");
+  }
+
   setTimeout(async function () {
     const endpoint =
       "https://aueforumreader.insitux.repl.co/866029217119600711/1085644308994068631";
@@ -70,10 +80,13 @@
         const h3 = document.createElement("h3");
         h3.innerText = thread.title;
         a.appendChild(h3);
-        const i = document.createElement("i");
+        const byline = document.createElement("span");
+        const messageCount = document.createElement("count");
         const date = new Date(thread.createdTimestamp).toLocaleDateString();
-        i.innerHTML = thread.author + ", " + date;
-        a.appendChild(i);
+        byline.innerHTML = thread.author + ", " + date;
+        messageCount.innerHTML = thread.messageCount + " 🗨";
+        a.appendChild(byline);
+        a.appendChild(messageCount);
         const appended = container.appendChild(a);
         appended.onclick = async function () {
           const container = document.getElementById("thread");
@@ -88,7 +101,10 @@
               div.className = "forum-message";
               const p = document.createElement("p");
               const date = new Date(message.createdTimestamp).toLocaleString();
-              p.innerHTML = `<info><i>${message.author}</i><pre>${date}</pre></info><p>${message.content}</p>`;
+              p.innerHTML = `<info>${message.author}<pre>${date}</pre></info><p>${message.content}</p>`;
+              for (const attachment of message.attachments.filter(isImg)) {
+                p.innerHTML += `<img src="${attachment}" />`;
+              }
               div.appendChild(p);
               container.appendChild(div);
             }
