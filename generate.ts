@@ -70,7 +70,7 @@ const articles = [...walkSync("articles", { directories: false })].map(path => {
   const [_, author] = path.split("/");
   const authorId = woSp(author);
   const content = readFileSync(path).toString();
-  const title = content.match(/<h1>(.+?)<\/h1>/)?.[1] ?? "Unknown article";
+  const title = content.match(/<h1>([\s\S]+?)<\/h1>/)?.[1] ?? "Unknown article";
   const firstPara =
     content.match(/<p>((?:.|\s)+?)<\/p>/m)?.[1].replace(/<\/?[^>]+>/g, "") ??
     "";
@@ -137,9 +137,9 @@ contributors.forEach(c => {
   );
   const articleEls = makeArticlesFragment(c);
   const descEls = (verseDescs ?? []).map(([cite, body]) => {
-    const verse = aue[c2n(cite)];
+    const verses = [...cite].map(c2n).map(n => aue[n]).join(" ");
     body = body.split("\n").join("</p><p>");
-    return `<description><cite>${cite}</cite> <b>${verse}</b> <p>${body}</p></description>`;
+    return `<description><cite>${cite}</cite> <b>${verses}</b> <p>${body}</p></description>`;
   });
   const materialEls = (materials ?? []).map(([title, urls, body]) =>
     materialHtml(title, urls, body),

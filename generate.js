@@ -87,7 +87,7 @@ var articles = __spreadArray([], __read(walkSync("articles", { directories: fals
     var _m = __read(path.split("/"), 2), _ = _m[0], author = _m[1];
     var authorId = woSp(author);
     var content = (0, fs_1.readFileSync)(path).toString();
-    var title = (_b = (_a = content.match(/<h1>(.+?)<\/h1>/)) === null || _a === void 0 ? void 0 : _a[1]) !== null && _b !== void 0 ? _b : "Unknown article";
+    var title = (_b = (_a = content.match(/<h1>([\s\S]+?)<\/h1>/)) === null || _a === void 0 ? void 0 : _a[1]) !== null && _b !== void 0 ? _b : "Unknown article";
     var firstPara = (_d = (_c = content.match(/<p>((?:.|\s)+?)<\/p>/m)) === null || _c === void 0 ? void 0 : _c[1].replace(/<\/?[^>]+>/g, "")) !== null && _d !== void 0 ? _d : "";
     var byLine = (_f = (_e = content.match(/<p class="by-line">((?:.|\s)+?)<\/p>/)) === null || _e === void 0 ? void 0 : _e[1]) !== null && _f !== void 0 ? _f : "";
     var date = Date.parse((_h = (_g = byLine.match(/\d+-\d+-\d+/)) === null || _g === void 0 ? void 0 : _g[0]) !== null && _h !== void 0 ? _h : "");
@@ -133,9 +133,9 @@ contributors.forEach(function (c) {
     var articleEls = makeArticlesFragment(c);
     var descEls = (verseDescs !== null && verseDescs !== void 0 ? verseDescs : []).map(function (_a) {
         var _b = __read(_a, 2), cite = _b[0], body = _b[1];
-        var verse = aue[c2n(cite)];
+        var verses = __spreadArray([], __read(cite), false).map(c2n).map(function (n) { return aue[n]; }).join(" ");
         body = body.split("\n").join("</p><p>");
-        return "<description><cite>".concat(cite, "</cite> <b>").concat(verse, "</b> <p>").concat(body, "</p></description>");
+        return "<description><cite>".concat(cite, "</cite> <b>").concat(verses, "</b> <p>").concat(body, "</p></description>");
     });
     var materialEls = (materials !== null && materials !== void 0 ? materials : []).map(function (_a) {
         var _b = __read(_a, 3), title = _b[0], urls = _b[1], body = _b[2];
