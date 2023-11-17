@@ -152,7 +152,7 @@ contributors.forEach(function (c) {
     }
     if (descEls.length) {
         var els = descEls.join("\n");
-        html += "\n<column class=\"descs\"><h2>Verse Descriptions</h2><descs>".concat(els, "</descs></column>");
+        html += "\n<column class=\"descs\"><h2>Verse Interpretations</h2><descs>".concat(els, "</descs></column>");
     }
     if (materialEls.length) {
         var els = materialEls.join("\n");

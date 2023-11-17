@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node generate.js",
-    "watch": "nodemon generate.js --watch articles/**/* -e html"
+    "watch": "nodemon generate.js -e html"
   },
   "author": "Patrick Bowen",
   "license": "CC-BY-4.0",
@@ -10,5 +10,11 @@
   },
   "devDependencies": {
     "@types/node": "^18.14.6"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "articles/**/*"
+    ],
+    "delay": 5000
   }
 }
