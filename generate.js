@@ -65,6 +65,7 @@ var mkdir = function (dir) { return (0, fs_2.existsSync)(dir) || (0, fs_2.mkdirS
     "fragments/contributions",
     "docs/wallpaper",
     "docs/forum",
+    "docs/articles",
 ].forEach(mkdir);
 //Build verses.html fragment
 (0, fs_1.writeFileSync)("fragments/verses.html", aue
@@ -79,7 +80,7 @@ var mkdir = function (dir) { return (0, fs_2.existsSync)(dir) || (0, fs_2.mkdirS
     return "<option value=\"".concat(woSp(c), "\">").concat(c, "</option>");
 })
     .join(""), "</select>"));
-//Build articles.html fragment
+//Build articles.html and latest-articles.html fragments
 var articles = __spreadArray([], __read(walkSync("articles", { directories: false })), false).map(function (path) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
     path = "articles/" + path;
@@ -99,9 +100,11 @@ articles.sort(function (_a, _b) {
     var a = _b.date;
     return a - b;
 });
-function makeArticlesFragment(forAuthor) {
+function makeArticlesFragment(_a) {
+    var _b = _a === void 0 ? {} : _a, forAuthor = _b.forAuthor, latestOnly = _b.latestOnly;
     return articles
         .filter(function (a) { return !forAuthor || a.authorId == forAuthor; })
+        .filter(function (_, i) { return !latestOnly || i < 5; })
         .map(function (_a) {
         var name = _a.name, title = _a.title, byLine = _a.byLine, authorId = _a.authorId, firstPara = _a.firstPara;
         var maxLen = 200;
@@ -109,10 +112,12 @@ function makeArticlesFragment(forAuthor) {
             firstPara.length > maxLen
                 ? firstPara.substring(0, maxLen) + "…"
                 : firstPara;
-        return "\n<a class=\"article-link\" href=\"/".concat(authorId, "/").concat(name, "\">\n<h3>").concat(title, "</h3>\n<i>").concat(byLine, "</i>\n<p>").concat(firstPara, "</p>\n</a>");
+        return "<a class=\"article-link\" href=\"/".concat(authorId, "/").concat(name, "\">\n      <h3>").concat(title, "</h3>\n      <i>").concat(byLine, "</i>\n      <p>").concat(firstPara, "</p>\n</a>");
     });
 }
-(0, fs_1.writeFileSync)("fragments/articles.html", makeArticlesFragment().join("\n"));
+(0, fs_1.writeFileSync)("fragments/all-articles.html", makeArticlesFragment().join(""));
+(0, fs_1.writeFileSync)("fragments/latest-articles.html", makeArticlesFragment({ latestOnly: true }).join("") +
+    "<a href=\"/articles\">See all articles (".concat(articles.length, ")</a>"));
 //Build contributor fragments
 function materialHtml(title, urls, comment) {
     var punc = title.endsWith("?") ? "" : ".";
@@ -130,10 +135,12 @@ contributors.forEach(function (c) {
         var _b = __read(_a, 3), name = _b[0], body = _b[1], cites = _b[2];
         return "<opinion data-cites=\"".concat(cites, "\"><i>").concat(name, ".</i> ").concat(body, " <cite>").concat(cites, "</cite></opinion>");
     });
-    var articleEls = makeArticlesFragment(c);
+    var articleEls = makeArticlesFragment({ forAuthor: c });
     var descEls = (verseDescs !== null && verseDescs !== void 0 ? verseDescs : []).map(function (_a) {
         var _b = __read(_a, 2), cite = _b[0], body = _b[1];
-        var verses = __spreadArray([], __read(cite), false).map(c2n).map(function (n) { return aue[n]; }).join(" ");
+        var verses = __spreadArray([], __read(cite), false).map(c2n)
+            .map(function (n) { return aue[n]; })
+            .join(" ");
         body = body.split("\n").join("</p><p>");
         return "<description><cite>".concat(cite, "</cite> <b>").concat(verses, "</b> <p>").concat(body, "</p></description>");
     });
@@ -148,11 +155,11 @@ contributors.forEach(function (c) {
     }
     if (articleEls.length) {
         var els = articleEls.join("\n");
-        html += "\n<column class=\"wide articles\"><h2>Articles</h2>".concat(els, "</column>");
+        html += "\n<column class=\"wide\"><h2>Articles</h2><articles>".concat(els, "</articles></column>");
     }
     if (descEls.length) {
         var els = descEls.join("\n");
-        html += "\n<column class=\"descs\"><h2>Verse Interpretations</h2><descs>".concat(els, "</descs></column>");
+        html += "\n<column class=\"descs\"><h2>Verse Descriptions</h2><descs>".concat(els, "</descs></column>");
     }
     if (materialEls.length) {
         var els = materialEls.join("\n");
@@ -216,7 +223,7 @@ contributors.forEach(function (contributor) {
         .replace("[[author-name]]", contributor)
         .replace("[[keywords]]", "".concat(defaultKeywords, ",adherent,articles,materials,opinions")));
 });
-//Generate article endpoints
+//Generate individual contributor article endpoints
 articles.forEach(function (_a) {
     var name = _a.name, author = _a.author, authorId = _a.authorId, title = _a.title, firstPara = _a.firstPara, keywords = _a.keywords;
     var dir = "docs/".concat(authorId);
@@ -230,7 +237,7 @@ articles.forEach(function (_a) {
         .replace("[[author-name]]", author)
         .replace("[[keywords]]", "".concat(defaultKeywords, ",").concat(keywords)));
 });
-//Generate cards, wallpaper, and forum endpoint
+//Generate cards, wallpaper, forum, and all articles endpoint
 (0, fs_1.writeFileSync)("docs/cards/index.html", target("cards"));
 (0, fs_1.writeFileSync)("docs/wallpaper/index.html", target("wallpaper"));
 (0, fs_1.writeFileSync)("docs/forum/index.html", target("forum")
@@ -238,4 +245,5 @@ articles.forEach(function (_a) {
     .replace("[[desc]]", "A copy of the Discord forum made available")
     .replace("[[author-name]]", "Patrick Bowen")
     .replace("[[keywords]]", "".concat(defaultKeywords, ",forum")));
+(0, fs_1.writeFileSync)("docs/articles/index.html", target("articles"));
 //# sourceMappingURL=generate.js.map

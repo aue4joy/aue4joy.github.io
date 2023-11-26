@@ -35,6 +35,7 @@ const mkdir = (dir: string) => existsSync(dir) || mkdirSync(dir);
   "fragments/contributions",
   "docs/wallpaper",
   "docs/forum",
+  "docs/articles",
 ].forEach(mkdir);
 
 //Build verses.html fragment
@@ -62,7 +63,7 @@ writeFileSync(
     .join("")}</select>`,
 );
 
-//Build articles.html fragment
+//Build articles.html and latest-articles.html fragments
 
 const articles = [...walkSync("articles", { directories: false })].map(path => {
   path = "articles/" + path;
@@ -86,25 +87,33 @@ const articles = [...walkSync("articles", { directories: false })].map(path => {
 });
 articles.sort(({ date: b }, { date: a }) => a - b);
 
-function makeArticlesFragment(forAuthor?: string) {
+function makeArticlesFragment({
+  forAuthor,
+  latestOnly,
+}: { forAuthor?: string; latestOnly?: boolean } = {}): string[] {
   return articles
     .filter(a => !forAuthor || a.authorId == forAuthor)
+    .filter((_, i) => !latestOnly || i < 5)
     .map(({ name, title, byLine, authorId, firstPara }) => {
       const maxLen = 200;
       firstPara =
         firstPara.length > maxLen
           ? firstPara.substring(0, maxLen) + "…"
           : firstPara;
-      return `
-<a class="article-link" href="/${authorId}/${name}">
-<h3>${title}</h3>
-<i>${byLine}</i>
-<p>${firstPara}</p>
+      return `<a class="article-link" href="/${authorId}/${name}">
+      <h3>${title}</h3>
+      <i>${byLine}</i>
+      <p>${firstPara}</p>
 </a>`;
     });
 }
 
-writeFileSync("fragments/articles.html", makeArticlesFragment().join("\n"));
+writeFileSync("fragments/all-articles.html", makeArticlesFragment().join(""));
+writeFileSync(
+  "fragments/latest-articles.html",
+  makeArticlesFragment({ latestOnly: true }).join("") +
+    `<a href="/articles">See all articles (${articles.length})</a>`,
+);
 
 //Build contributor fragments
 
@@ -135,9 +144,12 @@ contributors.forEach(c => {
     ([name, body, cites]) =>
       `<opinion data-cites="${cites}"><i>${name}.</i> ${body} <cite>${cites}</cite></opinion>`,
   );
-  const articleEls = makeArticlesFragment(c);
+  const articleEls = makeArticlesFragment({ forAuthor: c });
   const descEls = (verseDescs ?? []).map(([cite, body]) => {
-    const verses = [...cite].map(c2n).map(n => aue[n]).join(" ");
+    const verses = [...cite]
+      .map(c2n)
+      .map(n => aue[n])
+      .join(" ");
     body = body.split("\n").join("</p><p>");
     return `<description><cite>${cite}</cite> <b>${verses}</b> <p>${body}</p></description>`;
   });
@@ -151,7 +163,7 @@ contributors.forEach(c => {
   }
   if (articleEls.length) {
     const els = articleEls.join("\n");
-    html += `\n<column class="wide articles"><h2>Articles</h2>${els}</column>`;
+    html += `\n<column class="wide"><h2>Articles</h2><articles>${els}</articles></column>`;
   }
   if (descEls.length) {
     const els = descEls.join("\n");
@@ -254,7 +266,7 @@ contributors.forEach(contributor => {
   );
 });
 
-//Generate article endpoints
+//Generate individual contributor article endpoints
 
 articles.forEach(({ name, author, authorId, title, firstPara, keywords }) => {
   const dir = `docs/${authorId}`;
@@ -272,7 +284,7 @@ articles.forEach(({ name, author, authorId, title, firstPara, keywords }) => {
   );
 });
 
-//Generate cards, wallpaper, and forum endpoint
+//Generate cards, wallpaper, forum, and all articles endpoint
 
 writeFileSync("docs/cards/index.html", target("cards"));
 writeFileSync("docs/wallpaper/index.html", target("wallpaper"));
@@ -284,3 +296,4 @@ writeFileSync(
     .replace("[[author-name]]", "Patrick Bowen")
     .replace("[[keywords]]", `${defaultKeywords},forum`),
 );
+writeFileSync("docs/articles/index.html", target("articles"));

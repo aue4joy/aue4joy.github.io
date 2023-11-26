@@ -1,5 +1,6 @@
 fragments/contribut*
-fragments/articles*
+fragments/articles/*
+fragments/latest-articles.html
 fragments/verses.html
 !docs/cards/*
 !docs/wallpaper/*
