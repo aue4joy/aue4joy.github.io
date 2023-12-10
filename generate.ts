@@ -8,7 +8,7 @@ const n2c = (n: number) => String.fromCharCode(n + 97);
 const c2n = (c: string) => c.charCodeAt(0) - 97;
 const last = <T>(arr: T[]) => arr[arr.length - 1];
 
-const { aue }: { aue: string[] } = readJson("aue.json");
+const aue: { [lang: string]: string[]; en: string[] } = readJson("aue.json");
 const contributors = [...readdirSync("contributions")].map(
   e => e.split(".")[0],
 );
@@ -36,19 +36,22 @@ const mkdir = (dir: string) => existsSync(dir) || mkdirSync(dir);
   "docs/wallpaper",
   "docs/forum",
   "docs/articles",
+  "docs/translations",
 ].forEach(mkdir);
 
-//Build verses.html fragment
+//Build verses-<lang>.html fragments
 
-writeFileSync(
-  "fragments/verses.html",
-  aue
-    .map((v, i) => {
-      const cite = n2c(i);
-      return `<verse data-cite="${cite}"><cite>${cite}</cite> ${v}</verse>\n`;
-    })
-    .join(""),
-);
+Object.entries(aue).forEach(([lang, verses]) => {
+  writeFileSync(
+    `fragments/verses-${lang}.html`,
+    verses
+      .map((v, i) => {
+        const cite = n2c(i);
+        return `<verse data-cite="${cite}"><cite>${cite}</cite> ${v}</verse>\n`;
+      })
+      .join(""),
+  );
+});
 
 //Build contributors.html fragment
 
@@ -148,7 +151,7 @@ contributors.forEach(c => {
   const descEls = (verseDescs ?? []).map(([cite, body]) => {
     const verses = [...cite]
       .map(c2n)
-      .map(n => aue[n])
+      .map(n => aue.en[n])
       .join(" ");
     body = body.split("\n").join("</p><p>");
     return `<description><cite>${cite}</cite> <b>${verses}</b> <p>${body}</p></description>`;
@@ -281,6 +284,14 @@ articles.forEach(({ name, author, authorId, title, firstPara, keywords }) => {
       .replace("[[desc]]", desc)
       .replace("[[author-name]]", author)
       .replace("[[keywords]]", `${defaultKeywords},${keywords}`),
+  );
+});
+
+//Copy translation fragments
+Object.keys(aue).forEach(lang => {
+  writeFileSync(
+    `docs/translations/verses-${lang}.html`,
+    target(`verses-${lang}`),
   );
 });
 

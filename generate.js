@@ -44,7 +44,7 @@ var woSp = function (text) { return text.replace(/ /g, ""); };
 var n2c = function (n) { return String.fromCharCode(n + 97); };
 var c2n = function (c) { return c.charCodeAt(0) - 97; };
 var last = function (arr) { return arr[arr.length - 1]; };
-var aue = readJson("aue.json").aue;
+var aue = readJson("aue.json");
 var contributors = __spreadArray([], __read((0, fs_1.readdirSync)("contributions")), false).map(function (e) { return e.split(".")[0]; });
 {
     var first_1 = "Patrick Bowen";
@@ -66,14 +66,18 @@ var mkdir = function (dir) { return (0, fs_2.existsSync)(dir) || (0, fs_2.mkdirS
     "docs/wallpaper",
     "docs/forum",
     "docs/articles",
+    "docs/translations",
 ].forEach(mkdir);
-//Build verses.html fragment
-(0, fs_1.writeFileSync)("fragments/verses.html", aue
-    .map(function (v, i) {
-    var cite = n2c(i);
-    return "<verse data-cite=\"".concat(cite, "\"><cite>").concat(cite, "</cite> ").concat(v, "</verse>\n");
-})
-    .join(""));
+//Build verses-<lang>.html fragments
+Object.entries(aue).forEach(function (_a) {
+    var _b = __read(_a, 2), lang = _b[0], verses = _b[1];
+    (0, fs_1.writeFileSync)("fragments/verses-".concat(lang, ".html"), verses
+        .map(function (v, i) {
+        var cite = n2c(i);
+        return "<verse data-cite=\"".concat(cite, "\"><cite>").concat(cite, "</cite> ").concat(v, "</verse>\n");
+    })
+        .join(""));
+});
 //Build contributors.html fragment
 (0, fs_1.writeFileSync)("fragments/contributors.html", "<select id=\"contributor\" onchange=\"DomContributor(this)\">\n  <option></option>\n  ".concat(contributors
     .map(function (c) {
@@ -139,7 +143,7 @@ contributors.forEach(function (c) {
     var descEls = (verseDescs !== null && verseDescs !== void 0 ? verseDescs : []).map(function (_a) {
         var _b = __read(_a, 2), cite = _b[0], body = _b[1];
         var verses = __spreadArray([], __read(cite), false).map(c2n)
-            .map(function (n) { return aue[n]; })
+            .map(function (n) { return aue.en[n]; })
             .join(" ");
         body = body.split("\n").join("</p><p>");
         return "<description><cite>".concat(cite, "</cite> <b>").concat(verses, "</b> <p>").concat(body, "</p></description>");
@@ -236,6 +240,10 @@ articles.forEach(function (_a) {
         .replace("[[desc]]", desc)
         .replace("[[author-name]]", author)
         .replace("[[keywords]]", "".concat(defaultKeywords, ",").concat(keywords)));
+});
+//Copy translation fragments
+Object.keys(aue).forEach(function (lang) {
+    (0, fs_1.writeFileSync)("docs/translations/verses-".concat(lang, ".html"), target("verses-".concat(lang)));
 });
 //Generate cards, wallpaper, forum, and all articles endpoint
 (0, fs_1.writeFileSync)("docs/cards/index.html", target("cards"));
