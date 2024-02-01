@@ -307,4 +307,7 @@ writeFileSync(
     .replace("[[author-name]]", "Patrick Bowen")
     .replace("[[keywords]]", `${defaultKeywords},forum`),
 );
-writeFileSync("docs/articles/index.html", target("articles"));
+writeFileSync(
+  "docs/articles/index.html",
+  target("articles").replace("[[title]]", "All articles"),
+);

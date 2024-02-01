@@ -35,7 +35,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = require("fs");
 var fs_2 = require("fs");
 var walkSync = require("walk-sync");
@@ -188,7 +188,7 @@ var targets = __spreadArray([], __read(walkSync("fragments", { directories: fals
     return ({
         name: name,
         text: text,
-        deps: []
+        deps: [],
     });
 });
 //Find dependencies
@@ -253,5 +253,5 @@ Object.keys(aue).forEach(function (lang) {
     .replace("[[desc]]", "A copy of the Discord forum made available")
     .replace("[[author-name]]", "Patrick Bowen")
     .replace("[[keywords]]", "".concat(defaultKeywords, ",forum")));
-(0, fs_1.writeFileSync)("docs/articles/index.html", target("articles"));
+(0, fs_1.writeFileSync)("docs/articles/index.html", target("articles").replace("[[title]]", "All articles"));
 //# sourceMappingURL=generate.js.map
