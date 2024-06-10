@@ -151,7 +151,7 @@ contributors.forEach(c => {
   const descEls = (verseDescs ?? []).map(([cite, body]) => {
     const verses = [...cite]
       .map(c2n)
-      .map(n => aue.en[n])
+      .map(n => aue.eng[n])
       .join(" ");
     body = body.split("\n").join("</p><p>");
     return `<description><cite>${cite}</cite> <b>${verses}</b> <p>${body}</p></description>`;

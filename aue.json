@@ -1,7 +1,7 @@
 {
-  "en": [
+  "eng": [
     "Think sensibly for Aue;",
-    "believe in it & your abilities.",
+    "believe in it & your ability.",
     "Share, preserve, cite it for joy.",
     "Nature, so body, so mind, are of now;",
     "after death is scattering.",
@@ -12,11 +12,11 @@
     "Nature & society is our habitat.",
     "Oppose harm and raise compassion.",
     "Seek peace to woe incited, inflicted.",
-    "Show Aue beside woe naively fed.",
-    "Believe critically in science;",
+    "Show Aue amid woe of misjudgment.",
+    "Build trust in science;",
     "wield for joy and grow it."
   ],
-  "it": [
+  "ita": [
     "Pensa sensatamente per Aue;",
     "credi in esso e nelle tue capacità.",
     "Condividilo, preservarlo, citarlo, per la gioia.",
@@ -29,25 +29,42 @@
     "Natura e società è il nostro habitat.",
     "Opponiti al danno e suscitare compassione.",
     "Cerca la pace per i guai incitati, inflitti.",
-    "Mostra Aue accanto a guai ingenuamente nutriti.",
-    "Credere criticamente nella scienza;",
+    "Mostra Aue in mezzo ai guai di errori di valutazione.",
+    "Costruisci fiducia nella scienza;",
     "brandisci per la gioia e farla crescere."
   ],
-  "es": [
-    "Piensa sensiblemente por Aue;",
-    "cree en ella y en tus habilidades.",
-    "Comparte, preserva, citala por placer.",
+  "spa": [
+    "Piensa sensatamente por Aue;",
+    "cree en ella y en tu habilidad.",
+    "Comparte, preserva, cítala por placer.",
     "La naturaleza, ergo el cuerpo, ergo la mente, son para el ahora;",
     "Uno se dispersa tras la muerte.",
-    "La evolución le dió consciencia al gozo y la aflicción.",
-    "La vida, diversa, compartida con el universo.",
-    "El tiempo, volatil, hacer precioso.",
+    "La evolución originó la capacidad de sentir, el gozo y la aflicción.",
+    "La vida, diversa, comparte el universo.",
+    "El tiempo, volátil, haceldo valioso.",
     "Sé consciente del dolor y busca el gozo sin remores.",
     "La naturaleza y sociedad son nuestro habitad.",
     "Oponte al daño y se compasivo.",
     "Busca paz para los afligidos.",
-    "Muestra Aue junto al dolor ingenuo.",
-    "Cree críticamente en la ciencia;",
-    "usala para disfrutar y hazla crecer."
+    "Muestra Aue entre el dolor del mal juicio.",
+    "Genera confianza en la ciencia;",
+    "Usala para el gozo y haz que crezca."
+  ],
+  "ceb": [
+    "Huna-hunaa pagmaayo ang Awi;",
+    "tuohi kini ug ang imong mga abilidad.",
+    "Ipagambit, ipatunhay, ug hisgoti kini para sa kalipay.",
+    "Ang kalibutan, busa ang lawas, busa ang huna-huna, kay sa pagkakaron ra;",
+    "human sa kamatayon mao ang pagpasabwag.",
+    "[Evolution gave joy & woe, sentience.]",
+    "[Life, diverse, share the universe.]",
+    "[Time, volatile, make precious.]",
+    "[Know of woe and seek joy happily.]",
+    "[Nature & society is our habitat.]",
+    "[Oppose harm and raise compassion.]",
+    "[Seek peace to woe incited, inflicted.]",
+    "[Show Aue amid woe of misjudgment.]",
+    "[Build trust in science;]",
+    "[wield for joy and grow it.]"
   ]
 }

@@ -90,4 +90,6 @@ async function DomChooseLanguage(select) {
   const lang = select.value;
   const html = await (await fetch(`/translations/verses-${lang}.html`)).text();
   e("aue").innerHTML = html;
+  const rtl = lang === "ara";
+  e("aue").dir = rtl ? "rtl" : "ltr";
 }

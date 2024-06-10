@@ -143,7 +143,7 @@ contributors.forEach(function (c) {
     var descEls = (verseDescs !== null && verseDescs !== void 0 ? verseDescs : []).map(function (_a) {
         var _b = __read(_a, 2), cite = _b[0], body = _b[1];
         var verses = __spreadArray([], __read(cite), false).map(c2n)
-            .map(function (n) { return aue.en[n]; })
+            .map(function (n) { return aue.eng[n]; })
             .join(" ");
         body = body.split("\n").join("</p><p>");
         return "<description><cite>".concat(cite, "</cite> <b>").concat(verses, "</b> <p>").concat(body, "</p></description>");

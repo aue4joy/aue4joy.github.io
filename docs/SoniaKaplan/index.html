@@ -22,6 +22,7 @@
     if (contributor) {
       document.getElementById("contributor").value = contributor;
     }
+    DomChooseLanguage(e("#language-switcher"));
     setTimeout("FirstLoad()", 100);
   };
 
@@ -35,7 +36,7 @@
     <img src="/Aue.svg" width="32" height="32" alt="Aue symbol" /> Aue
   </a>
 </h1> <aue><verse data-cite="a"><cite>a</cite> Think sensibly for Aue;</verse>
-<verse data-cite="b"><cite>b</cite> believe in it & your abilities.</verse>
+<verse data-cite="b"><cite>b</cite> believe in it & your ability.</verse>
 <verse data-cite="c"><cite>c</cite> Share, preserve, cite it for joy.</verse>
 <verse data-cite="d"><cite>d</cite> Nature, so body, so mind, are of now;</verse>
 <verse data-cite="e"><cite>e</cite> after death is scattering.</verse>
@@ -46,14 +47,15 @@
 <verse data-cite="j"><cite>j</cite> Nature & society is our habitat.</verse>
 <verse data-cite="k"><cite>k</cite> Oppose harm and raise compassion.</verse>
 <verse data-cite="l"><cite>l</cite> Seek peace to woe incited, inflicted.</verse>
-<verse data-cite="m"><cite>m</cite> Show Aue beside woe naively fed.</verse>
-<verse data-cite="n"><cite>n</cite> Believe critically in science;</verse>
+<verse data-cite="m"><cite>m</cite> Show Aue amid woe of misjudgment.</verse>
+<verse data-cite="n"><cite>n</cite> Build trust in science;</verse>
 <verse data-cite="o"><cite>o</cite> wield for joy and grow it.</verse>
 </aue>
 <select id="language-switcher" onchange="DomChooseLanguage(this)">
-  <option value="en">English (original)</option>
-  <option value="es">Español (native)</option>
-  <option value="it">Italiano (provisional)</option>
+  <option value="eng">English (original)</option>
+  <option value="ceb">Bisaya (partial native)</option>
+  <option value="spa">Español (provisional)</option>
+  <option value="ita">Italiano (provisional)</option>
 </select>
 
   <p>
@@ -80,7 +82,7 @@
   <br />
   <h2 class="vert4">Contributor <select id="contributor" onchange="DomContributor(this)">
   <option></option>
-  <option value="PatrickBowen">Patrick Bowen</option><option value="DelTriunfo">Del Triunfo</option><option value="SoniaKaplan">Sonia Kaplan</option></select></h2>
+  <option value="PatrickBowen">Patrick Bowen</option><option value="DelTriunfo">Del Triunfo</option><option value="Devatāḥ">Devatāḥ</option><option value="SoniaKaplan">Sonia Kaplan</option></select></h2>
   <p>
     Aue is open for opinions, verse descriptions, articles, and curated
     materials by different people. If you would like to contribute, get in touch
