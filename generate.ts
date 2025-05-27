@@ -14,7 +14,9 @@ const contributors = [...readdirSync("contributions")].map(
 );
 {
   const first = "Patrick Bowen";
-  contributors.sort((x, y) => (x == first ? -1 : y == first ? 1 : 0));
+  contributors.sort((x, y) =>
+    x === first ? -1 : y === first ? 1 : x.localeCompare(y),
+  );
 }
 const defaultKeywords = "Aue,religion,atheist";
 
@@ -61,7 +63,7 @@ writeFileSync(
   <option></option>
   ${contributors
     .map(c => {
-      return `<option value="${woSp(c)}">${c}</option>`;
+      return `<option value="${woSp(c)}">${c}</option>\n`;
     })
     .join("")}</select>`,
 );

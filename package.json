@@ -9,7 +9,7 @@
     "walk-sync": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.14.6",
+    "@types/node": "^22.2.0",
     "typescript": "^5.3.3"
   },
   "nodemonConfig": {
